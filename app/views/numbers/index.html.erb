@@ -1,0 +1,28 @@
+<select box>
+
+<chart>
+
+</chart>
+
+<table>
+<th>
+	<td>Beginning of Time Period</td>
+	<td>End of Time Period</td>
+	<td>Number</td>
+
+</th>
+
+	<% @numbers.each do |number| %>
+		<tr>
+			<td><%= #{number.created_at.hour}:#{number.created_at.min}:00 %> </td>
+			<td><% if number.created_at.min == 59 %>
+					<%= #{number.created_at.hour +1}:00:00 %>
+				<% else %>
+					<%= #{number.created_at.hour}:#{number.created_at.min+1}:00 %> </td>
+				<% end %>
+	<% end %>
+</table>
+
+<script type="" id="first-set">
+	<%# Get the last ten dots %>
+</script>

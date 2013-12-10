@@ -58,5 +58,10 @@ module RandomNum
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    #If home, use that one
+    self.paths['config/database'] = (File.exists? ('config/database.mine.yml')) ? 'config/database.mine.yml' : 'config/database.yml'
+
+
   end
 end

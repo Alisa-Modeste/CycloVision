@@ -1,6 +1,6 @@
 def addNumber
 
-	while true
+	while false
 		#sleep 60000
 		sleep 600
 		#Number.create(num: Math.random)
@@ -12,5 +12,5 @@ def addNumber
 end
 
 #t = Thread.new{ addNumber() }
-Thread.new{ addNumber() }
+#Thread.new{ addNumber() }
 #t.join

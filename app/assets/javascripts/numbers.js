@@ -6,9 +6,9 @@
 	var NumberTracker = root.NumberTracker = (root.NumberTracker || {} );
 
 	var ending = NumberTracker.ending = new Date();
-	var beginning = NumberTracker.beginning = ending - 9;
+	var beginning = NumberTracker.beginning = getRangeStart();
 	var interval = NumberTracker.interval = "day";
-	var addition = NumberTracker.addition = 12;
+	var rangeLength = NumberTracker.rangeLength = 12;
 
 
 	var changeRange = NumberTracker.changeRange = function(next){
@@ -79,7 +79,7 @@
 
 			case day:
 			//Month Day - Month Day+1
-			moment().add('days', addition)._d;
+			var periodEnd = moment().add('days', 1)._d;
 
 			case month:
 			//Month - Month+1
@@ -100,6 +100,16 @@
 		else {
 			return twelveHourFormat( (number.created_at.hour) +":"+ (number.created_at.min+1) +":00");
 		}
+	};
+
+	var getRangeStart = NumberTracker.getRangeStart = function(){
+		return moment(""+ending.getFullYear() + (ending.getMonth()+1) + ending.getDate(), "YYYYMMDD").subtract(interval, rangeLength)._d
+
+	};
+
+	var getRangeEnd = NumberTracker.getRangeEnd = function(){
+		return moment(""+beginning.getFullYear() + (beginning.getMonth()+1) + beginning.getDate(), "YYYYMMDD").add(interval, rangeLength)._d
+
 	};
 
 

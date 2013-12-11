@@ -1,4 +1,4 @@
-<select box>
+<select box></select>
 
 <chart>
 
@@ -14,22 +14,12 @@
 
 	<% @numbers.each do |number| %>
 		<tr>
-			<td><%= "#{number.created_at.hour}:#{number.created_at.min}:00" %> </td>
-			<td>
-				<% if number.created_at.min == 59 %>
-					<% if number.created_at.hour == 12 %>
-						<%= "01:00:00" %>
-					<% else %>
-						<%= "#{number.created_at.hour +1}:00:00" %>
-					<% end %>
-				<% else %>
-					<%= "#{number.created_at.hour}:#{number.created_at.min+1}:00" %>
-				<% end %>
-			</td>
+			<td><%= Number.twelve_hour_format("#{number.created_at.hour}:#{number.created_at.min}:00") %> </td>
+			<td><%= Number.get_period_end(number) %> </td>
 			<td><%= number.number %></td>
 	<% end %>
 </table>
 
-<script type="" id="first-set">
+<script type="application/json" id="first-set">
 	<%# Get the last ten dots %>
 </script>

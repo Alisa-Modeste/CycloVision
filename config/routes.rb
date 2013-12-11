@@ -1,6 +1,6 @@
 RandomNum::Application.routes.draw do
+  resources :numbers
 
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -2,7 +2,7 @@ def addNumber
 
 	while true
 		#sleep 60000
-		sleep 60
+		sleep 600
 		#Number.create(num: Math.random)
 
 		#p "Would have inserted a number"

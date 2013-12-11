@@ -12,17 +12,25 @@
 
 </th>
 <span id='body-cells'>
-	<% @numbers.each do |number| %>
+	<!-- <%# @numbers.each do |number| %>
 		<tr>
-			<td><%= Number.twelve_hour_format("#{number.created_at.hour}:#{number.created_at.min}:00") %> </td>
-			<td><%= Number.get_period_end(number) %> </td>
-			<td><%= number.number %></td>
+			<td><%#= Number.twelve_hour_format("#{number.created_at.hour}:#{number.created_at.min}:00") %> </td>
+			<td><%#= Number.get_period_end(number) %> </td>
+			<td><%#= number.number %></td>
 		</tr>
-	<% end %>
+	<%# end %> -->
 </span>
 
 </table>
 
 <script type="application/json" id="first-set">
 	<%# Get the last ten dots %>
+</script>
+
+<script type="application/json" id="beginning">
+	<%# Get date minus (six) %>
+</script>
+
+<script type="application/json" id="ending">
+	<%# Get date %>
 </script>

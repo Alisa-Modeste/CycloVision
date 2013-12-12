@@ -141,7 +141,7 @@
 
 	var populateTable = NumberTracker.populateTable = function(){
 		var numbers = getEmbeddedData()
-		$("body-cells").empty();
+		$("#child-cell").nextAll().remove()
 
 		console.log("num", numbers)
 
@@ -163,13 +163,13 @@
 	};
 
 	var changeDates = NumberTracker.changeDates = function(next){
-		sendRequest(next)
+		sendRequest(next, populateTable)
 	};
 
 	var changeInterval = NumberTracker.changeInterval = function(newInterval){
 		interval = newInterval
 
-		sendRequest()
+		sendRequest("same", populateTable)
 		
 	};
 
@@ -193,7 +193,7 @@
 			},
 			success: function(data){
 				console.log("Success",data)
-				//callback(data)
+				callback(data)
 			}
 		});
 	};

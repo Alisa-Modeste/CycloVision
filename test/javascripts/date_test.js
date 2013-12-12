@@ -42,3 +42,12 @@ test('The current and next minute - PM', function() {
   equal(period[0], "8:53 PM", 'beginning of period by hour ');
   equal(period[1], "8:54 PM", 'end of period by hour ');
 });
+
+test('The current and next year', function() {
+	NumberTracker.interval = "year"
+	
+  	period = NumberTracker.getPeriodStartEnd(1386813239)
+
+  equal(period[0], "2013", 'beginning of period by year ');
+  equal(period[1], "2014", 'end of period by year ');
+});

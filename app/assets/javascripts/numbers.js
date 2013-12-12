@@ -159,13 +159,11 @@
 				break;
 
 			default:
-				console.log("I'm in the default")
 				periodStart = null;
 				periodEnd = null;
 
 		}
 
-		console.log( [periodStart, periodEnd]);
 		return [periodStart, periodEnd];
 	};
 

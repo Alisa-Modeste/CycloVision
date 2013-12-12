@@ -208,4 +208,10 @@
 	};
 
 
+
+
 })(window);
+
+$(document).ready(function(){
+	NumberTracker.populateTable()
+});

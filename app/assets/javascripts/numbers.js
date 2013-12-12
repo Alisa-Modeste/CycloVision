@@ -163,21 +163,39 @@
 	};
 
 
-	var populateTable = NumberTracker.populateTable = function(numbers){
+
+	var ending = NumberTracker.ending = new Date();
+	var beginning = NumberTracker.beginning = getRangeStart();
+
+
+	var getEmbeddedData = NumberTracker.grabEmbeddedData = function(){
+		return JSON.parse($("#first-set").html());
+
+	};
+
+	var populateTable = NumberTracker.populateTable = function(){
+		var numbers = getEmbeddedData()
 		$("body-cells").empty();
 
+		console.log("num", numbers)
+
 		numbers.forEach(function(number){
-			$("body-cells").append("<tr>");
-			$("body-cells").append("<td>"+twelveHourFormat(number.timestamp) +"</td>");
+			console.log("in each")
+			var period = getPeriodStartEnd(number.created_at);
+
+			// $("#body-cells").append("<tr><td>"+ period[0] +"</td>");
+			// $("#body-cells").append("<td>"+ period[1] +"</td>");
+
+			// $("#body-cells").append("<td>"+ number.number +"</td></tr>");
+
+
+			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ number.number +"</td></tr>");
+
 		// 	$("body-cells").append("<td>"+getPeriodEnd(number.timestamp) %> </td>
 		// 	<td><%#= number.number %></td>
 		// </tr>
 		});
 	};
-
-
-	var ending = NumberTracker.ending = new Date();
-	var beginning = NumberTracker.beginning = getRangeStart();
 
 
 })(window);

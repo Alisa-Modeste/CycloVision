@@ -12,14 +12,13 @@
 
 </chart>
 
-<table>
-<th>
-	<td>Beginning of Time Period</td>
-	<td>End of Time Period</td>
-	<td>Number</td>
+<table border='1' id='body-cells'>
+<tr>
+	<th>Beginning of Time Period</td>
+	<th>End of Time Period</td>
+	<th>Number</td>
 
-</th>
-<span id='body-cells'>
+</tr>
 	<!-- <%# @numbers.each do |number| %>
 		<tr>
 			<td><%#= Number.twelve_hour_format("#{number.created_at.hour}:#{number.created_at.min}:00") %> </td>
@@ -27,14 +26,14 @@
 			<td><%#= number.number %></td>
 		</tr>
 	<%# end %> -->
-</span>
+
 
 </table>
 
 <script type="application/json" id="first-set">
 	<%# Get the last ten dots %>
 
-	
+	<%= @numbers.to_json.html_safe %>
 </script>
 
 <script type="application/json" id="beginning">

@@ -7,6 +7,9 @@
 
 	var interval = NumberTracker.interval = "day";
 	var rangeLength = NumberTracker.rangeLength = 12;
+	var offset = NumberTracker.offset = 0;
+	var nextSet = NumberTracker.nextSet = 2; //neither true nor false
+	
 
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
@@ -170,17 +173,19 @@
 		
 	};
 
+	//next - trilean logic - 2 for neutral
 	var sendRequest = NumberTracker.sendRequest = function(next, callback){
 		$.ajax({
 			url: "/numbers",
 			dataType: "json",
 			data: {
 				request: {
-					nextSet: next,
+					nextSet: nextSet,
 					startDate: Date.parse(beginning)/1000,
 					endDate: Date.parse(ending)/1000,
 					timezoneOffset: ending.getTimezoneOffset(),
-					interval: interval
+					interval: interval,
+					offset: offset
 				}
 			},
 			error: function(){

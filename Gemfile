@@ -27,6 +27,8 @@ group :test, :development do
 	gem 'binding_of_caller'
 	gem 'qunit-rails'
 
+	gem 'rspec-rails', '~> 3.0.0.beta'
+
 end
 
 # To use ActiveModel has_secure_password

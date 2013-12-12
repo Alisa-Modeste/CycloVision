@@ -1,6 +1,12 @@
 class Number < ActiveRecord::Base
   attr_accessible :number
 
+  def as_json(*args)
+  	hash = super(:only => [:number])
+  	hash.merge!(created_at: self.created_at.to_i)
+
+  end
+
  #  def self.get_period_end(number)
 	# 	if number.created_at.min == 59
 	# 		if number.created_at.hour == 23

@@ -48,18 +48,14 @@
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
 		var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
-		//var yr = date.getFullYear(), day = date.getDate(), month = date.getMonth()+1;
-		var yr = date.getFullYear();
-		var day = date.getDate(), month = date.getMonth();
-
+		var yr = date.getFullYear(), day = date.getDate(), month = date.getMonth();
+		
 		interval = NumberTracker.interval
 
 		var periodEnd, periodStart;
 
 		var months = {0: "January", 1: "February", 2:"March", 3: "April", 4: "May",
 				5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"}
-
-		console.log('month', month, 'day',day)
 
 		switch(interval){
 			case "min":
@@ -127,7 +123,8 @@
 
 			case "day":
 			//Month Day - Month Day+1
-				periodEnd = moment().add('days', 1)._d;
+				periodEnd = moment(date.getFullYear() +"-"+ (date.getMonth()+1) +"-"+
+		 			date.getDate()).add('days', 1)._d;
 				periodStart = months[ month ] + date.getDate()
 
 				if (periodEnd.getMonth == 11){

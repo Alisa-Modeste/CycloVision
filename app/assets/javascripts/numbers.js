@@ -47,8 +47,22 @@
 
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
-		var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
-		var yr = date.getFullYear(), day = date.getDate(), month = date.getMonth();
+
+		date = {hour: date.getHours(), min: date.getMinutes(), sec: date.getSeconds(),
+			yr: date.getFullYear(), day: date.getDate(), month: date.getMonth()};
+
+		if (date.hour > 11){
+			//date.merdian = " PM";
+			date.merdian = {current: " PM", other: " AM"};
+		}
+		else {
+			date.merdian = {current: " AM", other: " PM"};
+		}
+
+		date.hour = date.hour % 12;
+		if (date.hour == 0){
+			date.hour = 12;
+		}
 		
 		interval = NumberTracker.interval
 
@@ -60,62 +74,46 @@
 		switch(interval){
 			case "min":
 			//hour:min A/P - hour:min+1 A/P
+				periodStart = date.hour + ":" + date.min + date.merdian.current;
 
-				if (hour < 12){
-					if (hour == 0){
-						periodStart = "12:" + min +" AM";
+				if (date.min == 59){
+					if (date.hour == 12){
+						periodEnd = "1:00" + date.merdian.current;
+					}
+					else if (date.hour == 11){
+						periodEnd = date.hour+1 + ":00" + date.merdian.other;	
 					}
 					else {
-						periodStart = hour + ":" + min +" AM";
-					}
-
-					if (min == 59){
-						periodEnd = hour+1 + ":00 AM";
-					}
-					else {
-						periodEnd = hour + ":" + (min+1) +" AM";
+						periodEnd = date.hour+1 + ":00" + date.merdian.current;
 					}
 				}
 				else {
-					if (hour == 12) hour = 1;
-
-					periodStart = hour %12 + ":" + min +" PM";
-
-					if (min == 59){
-						if (hour == 23){
-							periodEnd = "12:00:00 AM";
-						}
-						else {
-							periodEnd = hour%12+1 + ":00 PM";
-						}
-					}
-					else {
-						periodEnd = hour %12 + ":" + (min+1) +" PM";
-					}
+					periodEnd = date.hour + ":" + (min+1) + date.merdian.current;
 				}
+				
 				break;
 
 
 			case "hour":
 			//HH:00 - HH+1:00
-				if (hour < 12){
-					periodStart = hour + ":00 AM";
+				if (date.hour < 12){
+					periodStart = date.hour + ":00 AM";
 
-					if (hour == 11){
+					if (date.hour == 11){
 						periodEnd = "12:00 PM"
 					}
 					else {
-						periodEnd = hour+1 + ":00 AM";
+						periodEnd = date.hour+1 + ":00 AM";
 					}
 				}
 				else {
-					periodStart = hour % 12 + ":00 PM";
+					periodStart = date.hour % 12 + ":00 PM";
 
-					if (hour == 23){
-						periodEnd = "12:00 AM"
+					if (date.hour == 23){
+						date.periodEnd = "12:00 AM"
 					}
 					else {
-						periodEnd = hour % 12 +1 + ":00 PM";
+						periodEnd = date.hour % 12 +1 + ":00 PM";
 					}
 				}
 				break;
@@ -123,27 +121,27 @@
 
 			case "day":
 			//Month Day - Month Day+1
-				periodEnd = moment(date.getFullYear() +"-"+ (date.getMonth()+1) +"-"+
-		 			date.getDate()).add('days', 1)._d;
-				periodStart = months[ month ] + date.getDate()
+				periodEnd = moment(date.year +"-"+ (date.month+1) +"-"+
+		 			date.day).add('days', 1)._d;
+				periodStart = months[ month ] + date.day()
 
-				if (periodEnd.getMonth == 11){
-					periodEnd = months[0] + date.getDate()
+				if (periodEnd.getMonth() == 11){
+					periodEnd = months[0] + date.day;
 				}
 				else {
-					periodEnd = months[month+1] + date.getDate()
+					periodEnd = months[month+1] + date.day;
 				}
 				break;
 
 			case "month":
 			//Month - Month+1
-				periodStart = months[month]
+				periodStart = months[date.month]
 
-				if (month == 11){
+				if (date.month == 11){
 					periodEnd = months[0]
 				}
 				else {
-					periodEnd = months[month+1]
+					periodEnd = months[date.month+1]
 				}
 				break;
 
@@ -151,8 +149,8 @@
 			case "year":
 			//Year - Year +1
 
-				periodStart = yr;
-				periodEnd = yr +1;
+				periodStart = date.yr;
+				periodEnd = date.yr +1;
 				break;
 
 			default:

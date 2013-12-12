@@ -8,26 +8,6 @@
 	var interval = NumberTracker.interval = "day";
 	var rangeLength = NumberTracker.rangeLength = 12;
 
-	var changeRange = NumberTracker.changeRange = function(next){
-
-		$.ajax({
-			data: {
-				next: next,
-				startDate: beginning,
-				endDate: ending,
-				timezoneOffset: ending.getTimezoneOffset(),
-				interval: interval
-			},
-			error: function(){
-
-			},
-			success: function(){
-
-			}
-		});
-	};
-
-
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
 
@@ -176,6 +156,31 @@
 
 			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[key] +"</td></tr>");
 
+		});
+	};
+
+	var changeDates = NumberTracker.changeDates = function(){
+
+	};
+
+	var changeRange = NumberTracker.changeInterval = function(next){
+
+		$.ajax({
+			url: "/numbers",
+			dataType: "json",
+			data: {
+				next: next,
+				startDate: beginning,
+				endDate: ending,
+				timezoneOffset: ending.getTimezoneOffset(),
+				interval: interval
+			},
+			error: function(){
+				console.log("There was an error")
+			},
+			success: function(data){
+				console.log("Success",data)
+			}
 		});
 	};
 

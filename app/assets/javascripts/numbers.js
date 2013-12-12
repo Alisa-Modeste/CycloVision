@@ -177,8 +177,8 @@
 			data: {
 				request: {
 					nextSet: next,
-					startDate: beginning,
-					endDate: ending,
+					startDate: Date.parse(beginning)/1000,
+					endDate: Date.parse(ending)/1000,
 					timezoneOffset: ending.getTimezoneOffset(),
 					interval: interval
 				}

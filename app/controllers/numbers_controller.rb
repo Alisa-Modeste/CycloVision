@@ -1,6 +1,6 @@
 class NumbersController < ApplicationController
 	def index
-		@numbers = Number.period_record(params[:interval])
+		@numbers = Number.period_record(params[:request])
 
 		respond_to do |format|
 			format.html #render :index

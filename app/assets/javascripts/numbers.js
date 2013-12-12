@@ -159,27 +159,36 @@
 		});
 	};
 
-	var changeDates = NumberTracker.changeDates = function(){
-
+	var changeDates = NumberTracker.changeDates = function(next){
+		sendRequest(next)
 	};
 
-	var changeRange = NumberTracker.changeInterval = function(next){
+	var changeInterval = NumberTracker.changeInterval = function(newInterval){
+		interval = newInterval
 
+		sendRequest()
+		
+	};
+
+	var sendRequest = NumberTracker.sendRequest = function(next, callback){
 		$.ajax({
 			url: "/numbers",
 			dataType: "json",
 			data: {
-				next: next,
-				startDate: beginning,
-				endDate: ending,
-				timezoneOffset: ending.getTimezoneOffset(),
-				interval: interval
+				request: {
+					nextSet: next,
+					startDate: beginning,
+					endDate: ending,
+					timezoneOffset: ending.getTimezoneOffset(),
+					interval: interval
+				}
 			},
 			error: function(){
 				console.log("There was an error")
 			},
 			success: function(data){
 				console.log("Success",data)
+				//callback(data)
 			}
 		});
 	};

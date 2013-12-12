@@ -7,19 +7,9 @@ class NumbersController < ApplicationController
 		#@numbers = Number.select([:id, :number, :created_at]) 
 
 
-		case params[:interval]
-		when "min" 
-			@numbers = Number.all 
-		when "hour" 
-			@numbers = Number.all 
-		when "month" 
-			@numbers = Number.all 
-		when "year" 
-			@numbers = Number.all 
-		else
-			#day
-			@numbers = Number.all 
-		end
+		#@numbers = Number.period_record(params[:interval])
+		@numbers = Number.period_record("hour")
+
 
 		respond_to do |format|
 			format.html #render :index

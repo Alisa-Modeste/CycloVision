@@ -7,6 +7,11 @@ class Number < ActiveRecord::Base
 
   end
 
+  # def created_at
+  #   created_at= attributes["created_at"]
+  #   created_at.to_i
+  # end
+
   def self.period_record(interval = null)
  #  	case interval
 	# when :min
@@ -23,7 +28,7 @@ class Number < ActiveRecord::Base
 	# end
 
 	if interval
-		Number.sum(:number, :group=>"date_trunc(#{interval}, created_at)")
+		Number.sum(:number, :group=>"date_trunc('#{interval}', created_at)")
 	else
 		Number.sum(:number, :group=>"date_trunc('day', created_at)")
 	end

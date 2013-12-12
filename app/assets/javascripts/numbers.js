@@ -113,14 +113,10 @@
 			//Month Day - Month Day+1
 				periodEnd = moment(date.year +"-"+ (date.month+1) +"-"+
 		 			date.day).add('days', 1)._d;
-				periodStart = months[ month ] + date.day()
+				periodStart = months[ date.month ] + " " + date.day;
 
-				if (periodEnd.getMonth() == 11){
-					periodEnd = months[0] + date.day;
-				}
-				else {
-					periodEnd = months[month+1] + date.day;
-				}
+				periodEnd = months[ periodEnd.getMonth() ] + " " + periodEnd.getDate();
+
 				break;
 
 			case "month":

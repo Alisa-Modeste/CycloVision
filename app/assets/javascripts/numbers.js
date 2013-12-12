@@ -28,23 +28,6 @@
 	};
 
 
-	//var twelveHourFormat = NumberTracker.twelveHourFormat = function(hour, min, sec){
-	// var twelveHourFormat = NumberTracker.twelveHourFormat = function(timestamp){
-	// 	var date = new Date(timestamp);
-	// 	var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
-
-	// 	if (hour < "12"){
-	// 		if (hour == "0") hour = 12 ;
-	// 		return [hour,min,sec].join(":") + " AM";
-	// 	}
-	// 	else {
-	// 		hour = hour % 12;
-	// 		return [hour,min,sec].join(":") + " PM";
-	// 	}
-
-	// };
-
-
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
 
@@ -193,9 +176,6 @@
 
 			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[key] +"</td></tr>");
 
-		// 	$("body-cells").append("<td>"+getPeriodEnd(number.timestamp) %> </td>
-		// 	<td><%#= number.number %></td>
-		// </tr>
 		});
 	};
 

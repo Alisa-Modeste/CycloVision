@@ -174,7 +174,7 @@
 	};
 
 	//next - trilean logic - 2 for neutral
-	var sendRequest = NumberTracker.sendRequest = function(next, callback){
+	var sendRequest = NumberTracker.sendRequest = function(nextSet, callback){
 		$.ajax({
 			url: "/numbers",
 			dataType: "json",

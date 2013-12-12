@@ -88,7 +88,7 @@
 					}
 				}
 				else {
-					periodEnd = date.hour + ":" + (min+1) + date.merdian.current;
+					periodEnd = date.hour + ":" + (date.min+1) + date.merdian.current;
 				}
 				
 				break;
@@ -96,26 +96,16 @@
 
 			case "hour":
 			//HH:00 - HH+1:00
-				if (date.hour < 12){
-					periodStart = date.hour + ":00 AM";
+			
+				periodStart = date.hour + ":00" + date.merdian.current;
 
-					if (date.hour == 11){
-						periodEnd = "12:00 PM"
-					}
-					else {
-						periodEnd = date.hour+1 + ":00 AM";
-					}
+				if (date.hour == 11){
+					periodEnd = "12:00" + date.merdian.other;
 				}
 				else {
-					periodStart = date.hour % 12 + ":00 PM";
-
-					if (date.hour == 23){
-						date.periodEnd = "12:00 AM"
-					}
-					else {
-						periodEnd = date.hour % 12 +1 + ":00 PM";
-					}
+					periodEnd = date.hour+1 + ":00" + date.merdian.current;
 				}
+
 				break;
 				
 

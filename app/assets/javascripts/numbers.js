@@ -5,12 +5,6 @@
 (function (root){
 	var NumberTracker = root.NumberTracker = (root.NumberTracker || {} );
 
-	var ending = NumberTracker.ending = new Date();
-	var beginning = NumberTracker.beginning = getRangeStart();
-	var interval = NumberTracker.interval = "day";
-	var rangeLength = NumberTracker.rangeLength = 12;
-
-
 	var changeRange = NumberTracker.changeRange = function(next){
 
 		$.ajax({
@@ -32,75 +26,20 @@
 
 
 	//var twelveHourFormat = NumberTracker.twelveHourFormat = function(hour, min, sec){
-	var twelveHourFormat = NumberTracker.twelveHourFormat = function(timestamp){
-		var date = new Date(timestamp);
-		var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
+	// var twelveHourFormat = NumberTracker.twelveHourFormat = function(timestamp){
+	// 	var date = new Date(timestamp);
+	// 	var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
 
-		if (hour < "12"){
-			if (hour == "0") hour = 12 ;
-			return [hour,min,sec].join(":") + " AM";
-		}
-		else {
-			hour = hour % 12;
-			return [hour,min,sec].join(":") + " PM";
-		}
+	// 	if (hour < "12"){
+	// 		if (hour == "0") hour = 12 ;
+	// 		return [hour,min,sec].join(":") + " AM";
+	// 	}
+	// 	else {
+	// 		hour = hour % 12;
+	// 		return [hour,min,sec].join(":") + " PM";
+	// 	}
 
-	};
-
-	var getPeriodEnd = NumberTracker.getPeriodEnd = function(timestamp){
-		var date = new Date(timestamp);
-		var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
-
-		if (min == 59){
-			if (hour == 23){
-				return "12:00:00 AM";
-			}
-			else {
-				return (hour + 1) +":00:00";
-			}
-		}
-		else {
-			return twelveHourFormat( (number.created_at.hour) +":"+ (number.created_at.min+1) +":00");
-		}
-	};
-
-	var getPeriodStart = NumberTracker.getPeriodStart = function(timestamp){
-		var date = new Date(timestamp);
-		var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
-		var yr = date.getFullYear(), day = date.getDate(), month = date.getMonth+1
-
-		switch(interval){
-			case min:
-			//hour:min A/P - hour:min+1 A/P
-
-
-			case hour:
-			//HH:00 - HH+1:00
-
-			case day:
-			//Month Day - Month Day+1
-			var periodEnd = moment().add('days', 1)._d;
-
-			case month:
-			//Month - Month+1
-
-
-			case year:
-			//Year - Year +1
-		}
-
-		if (min == 59){
-			if (hour == 23){
-				return "12:00:00 AM";
-			}
-			else {
-				return (hour + 1) +":00:00";
-			}
-		}
-		else {
-			return twelveHourFormat( (number.created_at.hour) +":"+ (number.created_at.min+1) +":00");
-		}
-	};
+	// };
 
 
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
@@ -110,23 +49,12 @@
 
 		var periodEnd, periodStart;
 
-		months = {0: "January", 1: "February", 2:"March", 3: "April", 4: "May",
+		var months = {0: "January", 1: "February", 2:"March", 3: "April", 4: "May",
 				5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"}
 
 		switch(interval){
 			case "min":
 			//hour:min A/P - hour:min+1 A/P
-				// if (min == 59){
-				// 	if (hour == 23){
-				// 		periodEnd = "12:00:00 AM";
-				// 	}
-				// 	else {
-				// 		periodEnd = (hour + 1) +":00:00";
-				// 	}
-				// }
-				// else {
-				// 	return twelveHourFormat( (number.created_at.hour) +":"+ (number.created_at.min+1) +":00");
-				// }
 
 				if (hour < 12){
 					if (hour == 0){
@@ -140,12 +68,12 @@
 						periodEnd = hour+1 + ":00 AM";
 					}
 					else {
-						periodEnd = hour + ":" min+1 +" AM";
+						periodEnd = hour + ":" + (min+1) +" AM";
 					}
 				}
 				else {
 					if (hour == 12) hour = 1;
-					
+
 					periodStart = hour %12 + ":" + min +" PM";
 
 					if (min == 59){
@@ -157,7 +85,7 @@
 						}
 					}
 					else {
-						periodEnd = hour %12 + ":" min+1 +" PM";
+						periodEnd = hour %12 + ":" + (min+1) +" PM";
 					}
 				}
 
@@ -210,6 +138,13 @@
 
 				periodStart = yr;
 				periodEnd = yr +1;
+
+
+			default:
+				periodStart = null;
+				periodEnd = null;
+
+			return [periodStart, periodEnd];
 		}
 	};
 
@@ -239,6 +174,12 @@
 		// </tr>
 		});
 	};
+
+
+	var ending = NumberTracker.ending = new Date();
+	var beginning = NumberTracker.beginning = getRangeStart();
+	var interval = NumberTracker.interval = "day";
+	var rangeLength = NumberTracker.rangeLength = 12;
 
 
 })(window);

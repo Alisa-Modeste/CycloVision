@@ -102,9 +102,15 @@
 
 			case "hour":
 			//HH:00 - HH+1:00
-				if (hour > 11){
+				if (hour < 12){
 					periodStart = hour + ":00 AM";
-					periodEnd = hour+1 + ":00 AM";
+
+					if (hour == 11){
+						periodEnd = "12:00 PM"
+					}
+					else {
+						periodEnd = hour+1 + ":00 AM";
+					}
 				}
 				else {
 					periodStart = hour % 12 + ":00 PM";

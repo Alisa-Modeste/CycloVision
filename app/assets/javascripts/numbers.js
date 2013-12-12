@@ -53,6 +53,10 @@
 						periodEnd = date.hour+1 + ":00" + date.merdian.current;
 					}
 				}
+				else if(date.min < 10){
+					periodEnd = date.hour + ":0" + (date.min+1) + date.merdian.current;
+					periodStart = date.hour + ":0" + date.min + date.merdian.current;
+				}
 				else {
 					periodEnd = date.hour + ":" + (date.min+1) + date.merdian.current;
 				}

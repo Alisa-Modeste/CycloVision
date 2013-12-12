@@ -5,6 +5,9 @@
 (function (root){
 	var NumberTracker = root.NumberTracker = (root.NumberTracker || {} );
 
+	var interval = NumberTracker.interval = "day";
+	var rangeLength = NumberTracker.rangeLength = 12;
+
 	var changeRange = NumberTracker.changeRange = function(next){
 
 		$.ajax({
@@ -43,19 +46,21 @@
 
 
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
-		var date = new Date(timestamp);
+		var date = new Date(timestamp * 1000);
 		var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
 		//var yr = date.getFullYear(), day = date.getDate(), month = date.getMonth()+1;
 		var yr = date.getFullYear();
-		var day = date.getDate(), month = date.getMonth()+1;
+		var day = date.getDate(), month = date.getMonth();
+
+		interval = NumberTracker.interval
 
 		var periodEnd, periodStart;
 
 		var months = {0: "January", 1: "February", 2:"March", 3: "April", 4: "May",
 				5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"}
 
-		console.log(interval, typeof(interval))
-		console.log(interval == "day")
+		console.log('month', month, 'day',day)
+
 		switch(interval){
 			case "min":
 			//hour:min A/P - hour:min+1 A/P
@@ -188,8 +193,6 @@
 
 	var ending = NumberTracker.ending = new Date();
 	var beginning = NumberTracker.beginning = getRangeStart();
-	var interval = NumberTracker.interval = "day";
-	var rangeLength = NumberTracker.rangeLength = 12;
 
 
 })(window);

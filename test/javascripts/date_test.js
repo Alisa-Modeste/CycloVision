@@ -51,3 +51,12 @@ test('The current and next year', function() {
   equal(period[0], "2013", 'beginning of period by year ');
   equal(period[1], "2014", 'end of period by year ');
 });
+
+test('The current and next day', function() {
+	NumberTracker.interval = "day"
+	
+  	period = NumberTracker.getPeriodStartEnd(1386777583)
+
+  equal(period[0], "December 11", 'beginning of period by day ');
+  equal(period[1], "December 12", 'end of period by day ');
+});

@@ -5,7 +5,21 @@ class NumbersController < ApplicationController
 		#time = Time.at params[:timecode]
 		#time = time.utc
 		#@numbers = Number.select([:id, :number, :created_at]) 
-		@numbers = Number.all 
+
+
+		case params[:interval]
+		when "min" 
+			@numbers = Number.all 
+		when "hour" 
+			@numbers = Number.all 
+		when "month" 
+			@numbers = Number.all 
+		when "year" 
+			@numbers = Number.all 
+		else
+			#day
+			@numbers = Number.all 
+		end
 
 		respond_to do |format|
 			format.html #render :index

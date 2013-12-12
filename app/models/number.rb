@@ -7,6 +7,29 @@ class Number < ActiveRecord::Base
 
   end
 
+  def self.period_record(interval = null)
+ #  	case interval
+	# when :min
+	# 	@numbers = Number.all 
+	# when :hour
+	# 	@numbers = Number.all 
+	# when :month
+	# 	@numbers = Number.all 
+	# when :year
+	# 	@numbers = Number.all 
+	# else
+	# 	#days
+	# 	@numbers = Number.all
+	# end
+
+	if interval
+		Number.sum(:number, :group=>"date_trunc(#{interval}, created_at)")
+	else
+		Number.sum(:number, :group=>"date_trunc('day', created_at)")
+	end
+
+  end
+
  #  def self.get_period_end(number)
 	# 	if number.created_at.min == 59
 	# 		if number.created_at.hour == 23

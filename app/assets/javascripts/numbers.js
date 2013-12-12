@@ -9,7 +9,7 @@
 	var rangeLength = NumberTracker.rangeLength = 12;
 	var offset = NumberTracker.offset = 0;
 	var nextSet = NumberTracker.nextSet = 2; //neither true nor false
-	
+	var useAjax = false;
 
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
@@ -139,9 +139,14 @@
 
 	};
 
-	var populateTable = NumberTracker.populateTable = function(){
-		var numbers = getEmbeddedData()
-		$("#child-cell").nextAll().remove()
+	var populateTable = NumberTracker.populateTable = function(numbers){
+		if (!useAjax){
+			var numbers = getEmbeddedData();
+			useAjax = true;
+		}
+		else {
+			$("#child-cell").nextAll().remove()
+		}
 
 		console.log("num", numbers)
 
@@ -167,7 +172,7 @@
 	};
 
 	var changeInterval = NumberTracker.changeInterval = function(newInterval){
-		interval = newInterval
+		interval = NumberTracker.interval = newInterval
 
 		sendRequest("same", populateTable)
 		

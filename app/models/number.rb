@@ -1,37 +1,37 @@
 class Number < ActiveRecord::Base
   attr_accessible :number
 
-  def as_json(*args)
-  	hash = super(:only => [:number])
-  	hash.merge!(created_at: self.created_at.to_i)
+  # def as_json(*args)
+  # 	hash = super(:only => [:number])
+  # 	hash.merge!(created_at: self.created_at.to_i)
 
-  end
+  # end
 
-  # def created_at
+  # def self.created_at
   #   created_at= attributes["created_at"]
+  #   p created_at, created_at.to_i
   #   created_at.to_i
   # end
 
-  def self.period_record(interval = null)
- #  	case interval
-	# when :min
-	# 	@numbers = Number.all 
-	# when :hour
-	# 	@numbers = Number.all 
-	# when :month
-	# 	@numbers = Number.all 
-	# when :year
-	# 	@numbers = Number.all 
-	# else
-	# 	#days
-	# 	@numbers = Number.all
-	# end
+  def self.period_record(interval)
+  	interval = 'day' if interval.nil?
 
-	if interval
-		Number.sum(:number, :group=>"date_trunc('#{interval}', created_at)")
-	else
-		Number.sum(:number, :group=>"date_trunc('day', created_at)")
+	totals_with_timestamp = {}
+	totals = Number.sum(:number, :group=>"date_trunc('#{interval}', created_at)")
+
+	totals.each do |key, value| 
+		#2013-12-12 00:00:00"
+
+		if ["day", "month", "year"].include? interval
+			time = key[0..-9] + "12:00:00"
+			time = DateTime.strptime(time, '%Y-%m-%d %H:%M:%S').to_i
+		else
+			time = DateTime.strptime(key, '%Y-%m-%d %H:%M:%S').to_i
+		end
+		totals_with_timestamp[ time ] = value
 	end
+
+	totals_with_timestamp
 
   end
 

@@ -168,7 +168,7 @@
 	var beginning = NumberTracker.beginning = getRangeStart();
 
 
-	var getEmbeddedData = NumberTracker.grabEmbeddedData = function(){
+	var getEmbeddedData = NumberTracker.getEmbeddedData = function(){
 		return JSON.parse($("#first-set").html());
 
 	};
@@ -179,9 +179,11 @@
 
 		console.log("num", numbers)
 
-		numbers.forEach(function(number){
+		var keys = Object.keys(numbers).sort();
+		keys.forEach(function(key){
 			console.log("in each")
-			var period = getPeriodStartEnd(number.created_at);
+
+			var period = getPeriodStartEnd(key);
 
 			// $("#body-cells").append("<tr><td>"+ period[0] +"</td>");
 			// $("#body-cells").append("<td>"+ period[1] +"</td>");
@@ -189,7 +191,7 @@
 			// $("#body-cells").append("<td>"+ number.number +"</td></tr>");
 
 
-			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ number.number +"</td></tr>");
+			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[key] +"</td></tr>");
 
 		// 	$("body-cells").append("<td>"+getPeriodEnd(number.timestamp) %> </td>
 		// 	<td><%#= number.number %></td>

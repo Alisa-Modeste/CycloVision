@@ -1,5 +1,6 @@
-test('Foo always says the truth', function() {
-  foo = new Date();
+test('The current and next month', function() {
+	NumberTracker.interval = "month"
+  	period = NumberTracker.getPeriodStartEnd(1386777583)
 
-  equal(foo.truth, true, 'foo.truth is not true');
+  equal(period[0], "December", 'beginning in ');
 });

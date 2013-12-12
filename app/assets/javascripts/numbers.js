@@ -45,13 +45,17 @@
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp);
 		var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
-		var yr = date.getFullYear(), day = date.getDate(), month = date.getMonth+1;
+		//var yr = date.getFullYear(), day = date.getDate(), month = date.getMonth()+1;
+		var yr = date.getFullYear();
+		var day = date.getDate(), month = date.getMonth()+1;
 
 		var periodEnd, periodStart;
 
 		var months = {0: "January", 1: "February", 2:"March", 3: "April", 4: "May",
 				5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"}
 
+		console.log(interval, typeof(interval))
+		console.log(interval == "day")
 		switch(interval){
 			case "min":
 			//hour:min A/P - hour:min+1 A/P
@@ -88,6 +92,7 @@
 						periodEnd = hour %12 + ":" + (min+1) +" PM";
 					}
 				}
+				break;
 
 
 			case "hour":
@@ -106,20 +111,21 @@
 						periodEnd = hour % 12 +1 + ":00 PM";
 					}
 				}
-
+				break;
 				
 
 			case "day":
 			//Month Day - Month Day+1
 				periodEnd = moment().add('days', 1)._d;
-				periodStart = months[ month ] + periodStart.getDate()
+				periodStart = months[ month ] + date.getDate()
 
 				if (periodEnd.getMonth == 11){
-					periodEnd = months[0] + periodEnd.getDate()
+					periodEnd = months[0] + date.getDate()
 				}
 				else {
-					periodEnd = months[month+1] + periodEnd.getDate()
+					periodEnd = months[month+1] + date.getDate()
 				}
+				break;
 
 			case "month":
 			//Month - Month+1
@@ -131,6 +137,7 @@
 				else {
 					periodEnd = months[month+1]
 				}
+				break;
 
 
 			case "year":
@@ -138,14 +145,17 @@
 
 				periodStart = yr;
 				periodEnd = yr +1;
-
+				break;
 
 			default:
+				console.log("I'm in the default")
 				periodStart = null;
 				periodEnd = null;
 
-			return [periodStart, periodEnd];
 		}
+
+		console.log( [periodStart, periodEnd]);
+		return [periodStart, periodEnd];
 	};
 
 

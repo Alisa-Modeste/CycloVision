@@ -155,20 +155,55 @@
 		console.log("num", numbers)
 
 		var keys = Object.keys(numbers).sort();
-		keys.forEach(function(key){
-			console.log("in each")
+		// keys.forEach(function(key){
 
-			var period = getPeriodStartEnd(key);
+		// 	var period = getPeriodStartEnd(key);
+
+		// 	// $("#body-cells").append("<tr><td>"+ period[0] +"</td>");
+		// 	// $("#body-cells").append("<td>"+ period[1] +"</td>");
+
+		// 	// $("#body-cells").append("<td>"+ number.number +"</td></tr>");
+
+
+		// 	$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[key] +"</td></tr>");
+
+		// });
+
+		// var difference = {"min": 60, "hour": 3600, day: }
+
+		for (var i=0; i< keys.length; i++){
+
+
+			var period = getPeriodStartEnd(keys[i]);
 
 			// $("#body-cells").append("<tr><td>"+ period[0] +"</td>");
 			// $("#body-cells").append("<td>"+ period[1] +"</td>");
 
 			// $("#body-cells").append("<td>"+ number.number +"</td></tr>");
 
+			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[keys[i]] +"</td></tr>");
 
-			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[key] +"</td></tr>");
+//			j = 1;
 
-		});
+			var nextPeriod = moment(keys[i] *1000).add(interval, 1)._d.getTime() /1000;
+			//fill in the missing periods of time
+			console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", interval)
+			if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
+				//while (nextPeriod != keys[i+1] )
+console.log("inner is", nextPeriod, "keys[i+1] ", keys[i+1])
+				period = getPeriodStartEnd( nextPeriod );
+				$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
+
+				//j++;
+				nextPeriod = moment( nextPeriod ).add(interval, 1)._d.getTime();
+			console.log("the second inner is", nextPeriod, "keys[i+1] ", keys[i+1])	
+			console.log("space please")
+			}
+
+
+			
+
+		}
 	};
 
 	var changeDates = NumberTracker.changeDates = function(next){

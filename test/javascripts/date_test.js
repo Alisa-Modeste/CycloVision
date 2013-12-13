@@ -60,3 +60,25 @@ test('The current and next day', function() {
   equal(period[0], "December 11", 'beginning of period by day ');
   equal(period[1], "December 12", 'end of period by day ');
 });
+
+
+//Fix in the missing periods//////////
+
+test('Fill in missing minutes (disabled Ajax)', function() {
+  NumberTracker.interval = "min"
+  NumberTracker.useAjax = false;
+
+  NumberTracker.getEmbeddedData = function(){
+    console.log("I used this one")
+    return {1386903537: 2447, 1386903657: 138}
+
+  }
+
+  $("#qunit-fixture").after("<table id='body-cells'><tr id='child-cell'><tr></table>")
+
+ // period = NumberTracker.populateTable({1386903537: 2447, 1386903657: 138})
+   period = NumberTracker.populateTable()
+
+  equal(period[0], "December 11", 'beginning of period by day ');
+  equal(period[1], "December 12", 'end of period by day ');
+});

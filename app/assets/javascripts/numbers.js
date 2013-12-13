@@ -9,7 +9,7 @@
 	var rangeLength = NumberTracker.rangeLength = 12;
 	var offset = NumberTracker.offset = 0;
 	var nextSet = NumberTracker.nextSet = 2; //neither true nor false
-	var useAjax = false;
+	var useAjax = NumberTracker.useAjax = false;
 
 	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
@@ -144,12 +144,17 @@
 	};
 
 	var populateTable = NumberTracker.populateTable = function(numbers){
+		//here 
+		useAjax = NumberTracker.useAjax
 		if (!useAjax){
-			var numbers = getEmbeddedData();
-			useAjax = true;
+			//here
+			var numbers = getEmbeddedData = NumberTracker.getEmbeddedData;
+			useAjax = NumberTracker.useAjax = true;
+			console.log("Negative agax")
 		}
 		else {
 			$("#child-cell").nextAll().remove()
+			console.log("ajax")
 		}
 
 		console.log("num", numbers)

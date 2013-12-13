@@ -110,6 +110,8 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    sinon-rails (1.7.3)
+      railties (>= 3.1)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -138,4 +140,5 @@ DEPENDENCIES
   rails (= 3.2.13)
   rspec-rails (~> 3.0.0.beta)
   sass-rails (~> 3.2.3)
+  sinon-rails
   uglifier (>= 1.0.3)

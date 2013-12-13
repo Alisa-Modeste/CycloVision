@@ -28,6 +28,7 @@ group :test, :development do
 	gem 'qunit-rails'
 
 	gem 'rspec-rails', '~> 3.0.0.beta'
+	gem 'sinon-rails'
 
 end
 

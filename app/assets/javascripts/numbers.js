@@ -3,15 +3,15 @@
 //$("#body-cells").html()
 
 (function (root){
-	var NumberTracker = root.NumberTracker = (root.NumberTracker || {} );
+	var NT = root.NT = (root.NT || {} );
 
-	var interval = NumberTracker.interval = "day";
-	var rangeLength = NumberTracker.rangeLength = 12;
-	var offset = NumberTracker.offset = 0;
-	var nextSet = NumberTracker.nextSet = 2; //neither true nor false
-	var useAjax = NumberTracker.useAjax = false;
+	NT.interval = "day";
+	NT.rangeLength = 12;
+	NT.offset = 0;
+	NT.nextSet = 2; //neither true nor false
+	NT.useAjax = false;
 
-	var getPeriodStartEnd = NumberTracker.getPeriodStartEnd = function(timestamp){
+	NT.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
 
 		date = {hour: date.getHours(), min: date.getMinutes(), sec: date.getSeconds(),
@@ -29,15 +29,13 @@
 		if (date.hour == 0){
 			date.hour = 12;
 		}
-		
-		interval = NumberTracker.interval
 
 		var periodEnd, periodStart;
 
 		var months = {0: "January", 1: "February", 2:"March", 3: "April", 4: "May",
 				5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"}
 
-		switch(interval){
+		switch(NT.interval){
 			case "min":
 			//hour:min A/P - hour:min+1 A/P
 				periodStart = date.hour + ":" + date.min + date.merdian.current;
@@ -120,36 +118,35 @@
 
 
 
-	var getRangeStart = NumberTracker.getRangeStart = function(){
-		return moment(ending.getFullYear() +"-"+ (ending.getMonth()+1) +"-"+
-		 ending.getDate()).subtract(interval, rangeLength)._d
+	NT.getRangeStart = function(){
+		return moment(NT.ending.getFullYear() +"-"+ (NT.ending.getMonth()+1) +"-"+
+		 NT.ending.getDate()).subtract(NT.interval, NT.rangeLength)._d
 
 	};
 
-	var getRangeEnd = NumberTracker.getRangeEnd = function(){
-		return moment(beginning.getFullYear() +"-"+ (beginning.getMonth()+1) +"-"+
-		 beginning.getDate()).add(interval, rangeLength)._d
+	NT.getRangeEnd = function(){
+		return moment(NT.beginning.getFullYear() +"-"+ (NT.beginning.getMonth()+1) +"-"+
+		 NT.beginning.getDate()).add(NT.interval, NT.rangeLength)._d
 
 	};
 
 
 
-	var ending = NumberTracker.ending = new Date();
-	var beginning = NumberTracker.beginning = getRangeStart();
+	NT.ending = new Date();
+	NT.beginning = NT.getRangeStart();
 
 
-	var getEmbeddedData = NumberTracker.getEmbeddedData = function(){
+	NT.getEmbeddedData = function(){
 		return JSON.parse($("#first-set").html());
 
 	};
 
-	var populateTable = NumberTracker.populateTable = function(numbers){
-		//here 
-		useAjax = NumberTracker.useAjax
-		if (!useAjax){
-			//here
-			var numbers = getEmbeddedData = NumberTracker.getEmbeddedData;
-			useAjax = NumberTracker.useAjax = true;
+	NT.populateTable = function(numbers){
+
+		if (!NT.useAjax){
+
+			var numbers = NT.getEmbeddedData();
+			NT.useAjax = true;
 			console.log("Negative agax")
 		}
 		else {
@@ -162,7 +159,7 @@
 		var keys = Object.keys(numbers).sort();
 		// keys.forEach(function(key){
 
-		// 	var period = getPeriodStartEnd(key);
+		// 	var period = NT.getPeriodStartEnd(key);
 
 		// 	// $("#body-cells").append("<tr><td>"+ period[0] +"</td>");
 		// 	// $("#body-cells").append("<td>"+ period[1] +"</td>");
@@ -178,14 +175,14 @@
 
 		for (var i=0; i< keys.length; i++){
 
-			var period = getPeriodStartEnd(keys[i]);
+			var period = NT.getPeriodStartEnd(keys[i]);
 			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[keys[i]] +"</td></tr>");
 			
-			if (interval == "min"){
+			if (NT.interval == "min"){
 				var nextPeriod = parseInt(keys[i]) + 60;
 				if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
 					while ( nextPeriod != keys[i+1] ){
-						period = getPeriodStartEnd( nextPeriod );
+						period = NT.getPeriodStartEnd( nextPeriod );
 
 						$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
 
@@ -195,19 +192,19 @@
 			}
 			else {
 
-	 			var nextPeriod = moment(keys[i] *1000).add(interval, 1)._d.getTime() /1000;
+	 			var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
 	// 			//fill in the missing periods of time
-	 			 console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", interval)
+	 			 console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", NT.interval)
 	 			if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
 					var k =0;
 					while (nextPeriod != keys[i+1]){
 						k++;
 	 console.log("inner is", nextPeriod, "keys[i+1] ", keys[i+1])
-	 				period = getPeriodStartEnd( nextPeriod );
+	 				period = NT.getPeriodStartEnd( nextPeriod );
 	 				$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
 
 	// 				//j++;
-	 				nextPeriod = moment( nextPeriod *1000).add(interval, 1)._d.getTime() /1000;
+	 				nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 	 			 console.log("the second inner is", nextPeriod, "keys[i+1] ", keys[i+1])	
 				
 	 				}
@@ -219,30 +216,30 @@
 		}
 	};
 
-	var changeDates = NumberTracker.changeDates = function(next){
-		sendRequest(next, populateTable)
+	var changeDates = NT.changeDates = function(next){
+		sendRequest(next, NT.populateTable)
 	};
 
-	var changeInterval = NumberTracker.changeInterval = function(newInterval){
-		interval = NumberTracker.interval = newInterval
+	var changeInterval = NT.changeInterval = function(newInterval){
+		NT.interval = newInterval
 
-		sendRequest("same", populateTable)
+		sendRequest("same", NT.populateTable)
 		
 	};
 
 	//next - trilean logic - 2 for neutral
-	var sendRequest = NumberTracker.sendRequest = function(nextSet, callback){
+	var sendRequest = NT.sendRequest = function(nextSet, callback){
 		$.ajax({
 			url: "/numbers",
 			dataType: "json",
 			data: {
 				request: {
 					nextSet: nextSet,
-					startDate: Date.parse(beginning)/1000,
-					endDate: Date.parse(ending)/1000,
-					timezoneOffset: ending.getTimezoneOffset(),
-					interval: interval,
-					offset: offset
+					startDate: Date.parse(NT.beginning)/1000,
+					endDate: Date.parse(NT.ending)/1000,
+					timezoneOffset: NT.ending.getTimezoneOffset(),
+					interval: NT.interval,
+					offset: NT.offset
 				}
 			},
 			error: function(){
@@ -260,6 +257,6 @@
 
 })(window);
 
-$(document).ready(function(){
-	NumberTracker.populateTable()
-});
+// $(document).ready(function(){
+// 	NT.populateTable()
+// });

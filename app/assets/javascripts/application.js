@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require moment.min
+//= require sinon
 //= require_tree .

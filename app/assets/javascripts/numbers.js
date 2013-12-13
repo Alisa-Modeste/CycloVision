@@ -257,6 +257,6 @@
 
 })(window);
 
-// $(document).ready(function(){
-// 	NT.populateTable()
-// });
+$(document).ready(function(){
+	NT.populateTable()
+});

@@ -64,11 +64,11 @@ test('The current and next day', function() {
 
 //Fix in the missing periods//////////
 
-test('Fill in missing minutes (disabled Ajax)', function() {
+asyncTest('Fill in missing minutes (without Ajax)', function() {
+  expect( 1 );
+
   NT.interval = "min"
   NT.useAjax = false;
-
-  console.log("last test")
 
   var stub = sinon.stub(NT, "getEmbeddedData", function(){
     console.log("I used this one")
@@ -76,13 +76,13 @@ test('Fill in missing minutes (disabled Ajax)', function() {
 
   });
 
-  period = NT.populateTable()
+    $("#qunit-fixture").append("<table id='body-cells'><tr id='child-cell'></tr></table>")
 
-  equal(0, 0, 'beginning of period by day ');
+    period = NT.populateTable({1386903537: 2447, 1386903657: 138})
+    equal(0, 0, 'beginning of period by day ');
 
- //  $("#qunit-fixture").after("<table id='body-cells'><tr id='child-cell'><tr></table>")
-
- // // period = NT.populateTable({1386903537: 2447, 1386903657: 138})
+    start();
+   
  //   period = NT.populateTable()
 
  //  equal(period[0], "December 11", 'beginning of period by day ');

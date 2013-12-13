@@ -180,9 +180,13 @@
 				var nextPeriod = parseInt(keys[i]) + 60;
 				console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", interval)
 				if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
-					period = getPeriodStartEnd( nextPeriod );
+					while ( nextPeriod != keys[i+1] ){
+						period = getPeriodStartEnd( nextPeriod );
 
-					$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
+						$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
+
+						nextPeriod = nextPeriod +60;
+					}
 				}
 			}
 			else {

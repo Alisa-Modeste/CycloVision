@@ -178,7 +178,6 @@
 			
 			if (interval == "min"){
 				var nextPeriod = parseInt(keys[i]) + 60;
-				console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", interval)
 				if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
 					while ( nextPeriod != keys[i+1] ){
 						period = getPeriodStartEnd( nextPeriod );
@@ -191,26 +190,26 @@
 			}
 			else {
 
+	 			var nextPeriod = moment(keys[i] *1000).add(interval, 1)._d.getTime() /1000;
+	// 			//fill in the missing periods of time
+	 			 console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", interval)
+	 			if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
+					var k =0;
+					while (nextPeriod != keys[i+1]){
+						k++;
+	 console.log("inner is", nextPeriod, "keys[i+1] ", keys[i+1])
+	 				period = getPeriodStartEnd( nextPeriod );
+	 				$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
 
+	// 				//j++;
+	 				nextPeriod = moment( nextPeriod *1000).add(interval, 1)._d.getTime() /1000;
+	 			 console.log("the second inner is", nextPeriod, "keys[i+1] ", keys[i+1])	
 				
-
-				var nextPeriod = moment(keys[i] *1000).add(interval, 1)._d.getTime() /1000;
-				//fill in the missing periods of time
-				// console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", interval)
-				if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
-					//while (nextPeriod != keys[i+1] )
-	console.log("inner is", nextPeriod, "keys[i+1] ", keys[i+1])
-					period = getPeriodStartEnd( nextPeriod );
-					$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
-
-					//j++;
-					nextPeriod = moment( nextPeriod ).add(interval, 1)._d.getTime();
-				// console.log("the second inner is", nextPeriod, "keys[i+1] ", keys[i+1])	
-				
-				}
-
+	 				}
+	 			}
+ // 				console.log("space please")
 			}
-			 console.log("space please")
+			
 
 		}
 	};

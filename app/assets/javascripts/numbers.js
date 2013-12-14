@@ -167,73 +167,40 @@
 			console.log("ajax")
 		}
 
-		console.log("num", numbers, typeof(numbers))
 
 		var keys = Object.keys(numbers).sort();
-		console.log("THE KEYS ARE ", keys)
 		var periods = [];
-		// keys.forEach(function(key){
-
-		// 	var period = NT.getPeriodStartEnd(key);
-
-		// 	// $("#body-cells").append("<tr><td>"+ period[0] +"</td>");
-		// 	// $("#body-cells").append("<td>"+ period[1] +"</td>");
-
-		// 	// $("#body-cells").append("<td>"+ number.number +"</td></tr>");
-
-
-		// 	$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[key] +"</td></tr>");
-
-		// });
-
-		// var difference = {"min": 60, "hour": 3600, day: }
 
 		for (var i=0; i< keys.length; i++){
 
 			var period = NT.getPeriodStartEnd(keys[i]);
 			periods.push( [ period[0], period[1], numbers[keys[i]] ] );
-			
+
 			if (NT.interval == "min"){
 				var nextPeriod = parseInt(keys[i]) + 60;
-
-				if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
-					while ( nextPeriod != keys[i+1] ){
-						period = NT.getPeriodStartEnd( nextPeriod );
-
-						periods.push( [ period[0], period[1], 0 ] );
-
-						nextPeriod = nextPeriod +60;
-					}
-				}
 			}
 			else {
-
-	 			var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
-	// 			//fill in the missing periods of time
-	 			 console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", NT.interval)
-	 			if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
-					var k =0;
-					//while (nextPeriod != keys[i+1]){
-					while (nextPeriod < keys[i+1]){
-						k++;
-	 console.log("inner is", nextPeriod, "keys[i+1] ", keys[i+1])
-	 				period = NT.getPeriodStartEnd( nextPeriod );
-					periods.push( [ period[0], period[1], 0 ] );
-
-	// 				//j++;
-	 				nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
-	 			 console.log("the second inner is", nextPeriod, "keys[i+1] ", keys[i+1])	
-				
-	 				}
-	 			}
- // 				console.log("space please")
+				var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
 			}
-			
 
+
+			while ( keys[i+1] && ( nextPeriod < keys[i+1] ) ){
+				period = NT.getPeriodStartEnd( nextPeriod );
+
+				periods.push( [ period[0], period[1], 0 ] );
+
+				if (NT.interval == "min"){
+					nextPeriod = nextPeriod +60;
+				}
+				else {
+					nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
+				}
+			
+			}			
+
+	
 		}
 
-		console.log("Finished for loop")
-		console.log(periods)
 		return periods;
 	};
 

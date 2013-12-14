@@ -156,7 +156,7 @@
 			console.log("ajax")
 		}
 
-		
+
 		var periods = NT.getAllPeriods(numbers);
 
 		for (var i = 0; i < periods.length; i++) {
@@ -183,8 +183,9 @@
 				var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
 			}
 
-
-			while ( keys[i+1] && ( nextPeriod < keys[i+1] ) ){
+			//NOTE: check
+			while ( keys[i+1] && ( nextPeriod+59 < keys[i+1] ) ){
+				console.log("nextPeriod",nextPeriod,"keys[i+1]",keys[i+1])
 				period = NT.getPeriodStartEnd( nextPeriod );
 
 				periods.push( [ period[0], period[1], 0 ] );

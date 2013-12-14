@@ -1,4 +1,13 @@
 describe("populateTable", function() {
+  loadFixtures('testFixture.html')
+
+  beforeEach(function () {
+    $('#fixture').remove();
+   // $('body').append('<div id="fixture"></div>');
+   $("#my-fixture").append('<div id="fixture"></div>');
+   $("#fixture").append("<table id='body-cells'><tr id='child-cell'></tr></table>")
+  });
+
   NT.interval = "min"
   NT.useAjax = false;
 
@@ -10,13 +19,15 @@ describe("populateTable", function() {
 
   });
 
-   $("#jasmine_content").append("<table id='body-cells'><tr id='child-cell'></tr></table>")
+console.log($("#fixture"),"$('#fixture table')", $("#fixture table"))
+console.log("table",$("table"))
 
+console.log("child-cell",$("#child-cell"))
    console.log("before populateTable")
     period = NT.populateTable()
 
-    var $tr = $("#jasmine_content tbody tr:nth-child(3)")
-    console.log($tr)
+    var $tr = $("#fixture table")
+    console.log($tr, $("#fixture table"),$("#fixture"),$("#jasmine_content"))
 
   it("should fill in missing minutes (without Ajax)", function() {
     // player.play(song);
@@ -24,6 +35,8 @@ describe("populateTable", function() {
 
     // //demonstrates use of custom matcher
     // expect(player).toBePlaying(song);
+
+    expect(Page).toHave("9:59 PM")
   });
 
   // describe("when song has been paused", function() {

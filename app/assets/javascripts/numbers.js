@@ -142,6 +142,16 @@
 	};
 
 	NT.populateTable = function(numbers){
+		var periods = NT.getAllPeriods();
+
+		for (var i = 0; i < periods.length; i++) {
+			
+			$("#body-cells").append("<tr><td>"+ periods[i][0] +"</td><td>"+ periods[i][1] +"</td><td>"+periods[i][2] +"</td></tr>");
+		};
+		
+	};
+
+	NT.getAllPeriods = function(numbers){
 
 		if (!NT.useAjax){
 
@@ -157,6 +167,8 @@
 		console.log("num", numbers, typeof(numbers))
 
 		var keys = Object.keys(numbers).sort();
+		console.log("THE KEYS ARE ", keys)
+		var periods = [];
 		// keys.forEach(function(key){
 
 		// 	var period = NT.getPeriodStartEnd(key);
@@ -176,15 +188,16 @@
 		for (var i=0; i< keys.length; i++){
 
 			var period = NT.getPeriodStartEnd(keys[i]);
-			$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>"+ numbers[keys[i]] +"</td></tr>");
+			periods.push( [ period[0], period[1], numbers[keys[i]] ] );
 			
 			if (NT.interval == "min"){
 				var nextPeriod = parseInt(keys[i]) + 60;
+
 				if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
 					while ( nextPeriod != keys[i+1] ){
 						period = NT.getPeriodStartEnd( nextPeriod );
 
-						$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
+						periods.push( [ period[0], period[1], 0 ] );
 
 						nextPeriod = nextPeriod +60;
 					}
@@ -197,11 +210,12 @@
 	 			 console.log("keys[i]", keys[i], "outer is", nextPeriod, "int", NT.interval)
 	 			if ( keys[i+1] && ( nextPeriod != keys[i+1] ) ){
 					var k =0;
-					while (nextPeriod != keys[i+1]){
+					//while (nextPeriod != keys[i+1]){
+					while (nextPeriod < keys[i+1]){
 						k++;
 	 console.log("inner is", nextPeriod, "keys[i+1] ", keys[i+1])
 	 				period = NT.getPeriodStartEnd( nextPeriod );
-	 				$("#body-cells").append("<tr><td>"+ period[0] +"</td><td>"+ period[1] +"</td><td>0</td></tr>");
+					periods.push( [ period[0], period[1], 0 ] );
 
 	// 				//j++;
 	 				nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
@@ -216,6 +230,8 @@
 		}
 
 		console.log("Finished for loop")
+		console.log(periods)
+		return periods;
 	};
 
 	var changeDates = NT.changeDates = function(next){
@@ -260,7 +276,7 @@
 })(window);
 
 $(document).ready(function(){
-	if (location.port == 8888){
+	if (location.port == 8888 || location.href.indexOf("localhost") != -1){
 		return
 	}
 	NT.populateTable()

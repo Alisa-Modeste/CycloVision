@@ -154,7 +154,7 @@
 			console.log("ajax")
 		}
 
-		console.log("num", numbers)
+		console.log("num", numbers, typeof(numbers))
 
 		var keys = Object.keys(numbers).sort();
 		// keys.forEach(function(key){
@@ -214,6 +214,8 @@
 			
 
 		}
+
+		console.log("Finished for loop")
 	};
 
 	var changeDates = NT.changeDates = function(next){
@@ -258,5 +260,8 @@
 })(window);
 
 $(document).ready(function(){
+	if (location.port == 8888){
+		return
+	}
 	NT.populateTable()
 });

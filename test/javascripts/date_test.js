@@ -78,10 +78,19 @@ asyncTest('Fill in missing minutes (without Ajax)', function() {
 
     $("#qunit-fixture").append("<table id='body-cells'><tr id='child-cell'></tr></table>")
 
+ //setTimeout(function(){
     period = NT.populateTable({1386903537: 2447, 1386903657: 138})
-    equal(0, 0, 'beginning of period by day ');
+//},3500);
+ 
+var gg = $tr = $("#qunit-fixture")
+    var $tr = $("#qunit-fixture tbody tr:nth-child(3)")
+    console.log($("#qunit-fixture tbody"),$tr,gg)
 
+    equal(0, 0, 'beginning of period by day ');
+setTimeout(function(){
+   
     start();
+  },35000);
    
  //   period = NT.populateTable()
 

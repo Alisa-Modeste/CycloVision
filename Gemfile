@@ -1,3 +1,4 @@
+
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
@@ -29,6 +30,7 @@ group :test, :development do
 
 	gem 'rspec-rails', '~> 3.0.0.beta'
 	gem 'sinon-rails'
+	gem 'jasmine'
 
 end
 

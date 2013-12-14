@@ -17,7 +17,7 @@ test('The current and next hour - AM', function() {
 });
 
 test('The current and next minute - AM', function() {
-  NT.interval = "min"
+  NT.interval = "minute"
   
     period = NT.getPeriodStartEnd(1386777583)
 
@@ -35,7 +35,7 @@ test('The current and next hour - PM', function() {
 });
 
 test('The current and next minute - PM', function() {
-  NT.interval = "min"
+  NT.interval = "minute"
   
     period = NT.getPeriodStartEnd(1386813239)
 
@@ -80,7 +80,7 @@ test('The current and next day', function() {
 // });
 
 // test('getAllPeriods - two neighborly periods without ajax - min', function() {
-//   NT.interval = "min"
+//   NT.interval = "minute"
 //   NT.useAjax = false;
 
 //   var numbers = {1386953890: 2447, 1386953950: 138};
@@ -162,11 +162,27 @@ console.log('start day')
 
 });
 
-test('getAllPeriods - two periods with a gap without ajax - min', function() {
-  NT.interval = "min"
+test('getAllPeriods - two periods with a gap without ajax - min (far apart)', function() {
+  NT.interval = "minute"
   NT.useAjax = false;
 
-  var numbers = {1386953890: 2447, 1386954039: 138};
+  var numbers = {1386953880: 2447, 1386954059: 138};
+
+  var periods = NT.getAllPeriods(numbers);
+
+  var expectation = [["11:58 AM", "11:59 AM", 2447],
+    ["11:59 AM", "12:00 PM", 0],
+    ["12:00 PM", "12:01 PM", 138]];
+
+  deepEqual(periods, expectation, 'the gap in minutes was filled ');
+
+});
+
+test('getAllPeriods - two periods with a gap without ajax - min (close together)', function() {
+  NT.interval = "minute"
+  NT.useAjax = false;
+
+  var numbers = {1386953939: 2447, 1386954000: 138};
 
   var periods = NT.getAllPeriods(numbers);
 

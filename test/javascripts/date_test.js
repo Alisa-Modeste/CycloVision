@@ -164,16 +164,14 @@ test('getAllPeriods - two periods with a gap without ajax - min', function() {
   NT.useAjax = false;
 
   var numbers = {1386953890: 2447, 1386954039: 138};
-  console.log('')
-console.log('start min')
-    var periods = NT.getAllPeriods(numbers);
 
-console.log('end min')
-    var expectation = [["11:58 AM", "11:59 AM", 2447],
-      ["11:59 AM", "12:00 PM", 0],
-      ["12:00 PM", "12:01 PM", 138]];
+  var periods = NT.getAllPeriods(numbers);
 
-    deepEqual(periods, expectation, 'the gap in minutes was filled ');
+  var expectation = [["11:58 AM", "11:59 AM", 2447],
+    ["11:59 AM", "12:00 PM", 0],
+    ["12:00 PM", "12:01 PM", 138]];
+
+  deepEqual(periods, expectation, 'the gap in minutes was filled ');
 
 });
 

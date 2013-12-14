@@ -167,7 +167,7 @@
 	};
 
 	NT.getAllPeriods = function(numbers){
-
+		console.log("inside periods")
 		var keys = Object.keys(numbers).sort();
 		var periods = [];
 
@@ -176,6 +176,11 @@
 			var period = NT.getPeriodStartEnd(keys[i]);
 			periods.push( [ period[0], period[1], numbers[keys[i]] ] );
 
+
+    //min = 59, hour = 3599, day = 3600*24-1
+    //month (moment(1386813239*1000).month() +1) % 12 < moment(keys[i+1])
+    //year moment(1386813239*1000).year() + 1 < moment(keys[i+1])
+
 			if (NT.interval == "min"){
 				var nextPeriod = parseInt(keys[i]) + 60;
 			}
@@ -183,8 +188,35 @@
 				var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
 			}
 
-			//NOTE: check
-			while ( keys[i+1] && ( nextPeriod+59 < keys[i+1] ) ){
+			
+			
+
+			if (NT.interval == "month"){
+				periodGoal = moment(keys[i+1] *1000).month();
+			}
+			else if (NT.interval == "year"){
+				periodGoal = moment(keys[i+1] *1000).year();
+			}
+			else {
+				var periodGoal = keys[i+1];
+			}
+
+
+			// //NOTE: check
+			// console.log("is there another one", i+1<keys.length, keys[i+1])
+			
+			// console.log("is it less than", periodComparison < periodGoal)
+			// console.log("periodComparison",periodComparison, "periodGoal", periodGoal)
+
+			var periodComparison = NT.getPeriodComparison(nextPeriod);
+			console.log("periodComparison",periodComparison, "periodGoal", periodGoal)
+			while ( keys[i+1] && ( periodComparison < periodGoal )){
+			// 	console.log("","in while")
+
+			// 	console.log("is it less than", periodComparison < periodGoal)
+			// console.log("periodComparison",periodComparison, "periodGoal", periodGoal)
+			// 	b++
+			//if ( keys[i+1] && ( periodComparison < periodGoal ) ){
 				console.log("nextPeriod",nextPeriod,"keys[i+1]",keys[i+1])
 				period = NT.getPeriodStartEnd( nextPeriod );
 
@@ -197,12 +229,41 @@
 					nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				}
 			
+				periodComparison = NT.getPeriodComparison(nextPeriod);
+			console.log("AGAIN is it less than", periodComparison < periodGoal)
 			}			
 
 	
 		}
 
 		return periods;
+	};
+
+	NT.getPeriodComparison = function(nextPeriod){
+		var periodComparison;
+
+		switch (NT.interval){
+		case "min":
+			periodComparison = nextPeriod+59;
+			break;
+		case "hour":
+			periodComparison = nextPeriod + 3599;
+			break;
+
+		case "day":
+			periodComparison = nextPeriod + (3600*24-1)
+			break;
+
+		case "month":
+			periodComparison = (moment(nextPeriod*1000).month() +1) % 12;
+			break;
+
+		case "year":
+			periodComparison = (moment(nextPeriod*1000).year() +1);
+			break;
+		}
+
+		return periodComparison;
 	};
 
 	NT.changeDates = function(next){

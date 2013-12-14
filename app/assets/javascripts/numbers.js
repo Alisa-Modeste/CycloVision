@@ -183,15 +183,15 @@
 			}
 
 
-			if (NT.interval == "month"){
-				var periodGoal = moment(keys[i+1] *1000).month();
-			}
-			else if (NT.interval == "year"){
-				var periodGoal = moment(keys[i+1] *1000).year();
-			}
-			else {
+			//if (NT.interval == "min"){
 				var periodGoal = keys[i+1];
-			}
+			// }
+			// else{
+			// 	//var periodGoal = moment(keys[i+1] *1000)[NT.interval]();
+			// 	var periodGoal = moment(keys[i+1] *1000)[NT.interval]();
+
+			// 	console.log("inter", NT.interval, moment(keys[i+1] *1000).calendar(), "periodGoal",periodGoal)
+			// }
 
 
 			var periodComparison = NT.getPeriodComparison(nextPeriod);
@@ -227,22 +227,18 @@
 		case "min":
 			periodComparison = nextPeriod+59;
 			break;
-		case "hour":
-			periodComparison = nextPeriod + 3599;
-			break;
-
-		case "day":
-			console.log(nextPeriod, nextPeriod + (3600*24-1))
-			periodComparison = nextPeriod + (3600*24-1)
-			break;
-
-		case "month":
-			periodComparison = (moment(nextPeriod*1000).month() +1) % 12;
-			break;
 
 		case "year":
 			periodComparison = (moment(nextPeriod*1000).year() +1);
 			break;
+
+		default:
+			//periodComparison = (moment(nextPeriod*1000).hour() +1);
+			//periodComparison = moment(nextPeriod *1000).add(NT.interval, 1).endOf(NT.interval)._d.getTime() / 1000;
+			periodComparison = moment(nextPeriod *1000).endOf(NT.interval)._d.getTime() / 1000;
+	
+
+	
 		}
 
 		return periodComparison;

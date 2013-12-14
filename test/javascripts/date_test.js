@@ -141,23 +141,26 @@ test('The current and next day', function() {
 
 // //Fill in the missing periods//////////
 
-// test('getAllPeriods - two periods with a gap without ajax - day', function() {
-//   NT.interval = "day"
-//   NT.useAjax = false;
+test('getAllPeriods - two periods with a gap without ajax - day', function() {
+  NT.interval = "day"
+  NT.useAjax = false;
 
-//   var numbers = {1386978639: 2447, 1387133439: 138};
-//   console.log('')
-// console.log('start day')
-//     var periods = NT.getAllPeriods(numbers);
+  var numbers = {1386978639: 2447, 1387133439: 138};
+  //12/13/2013 6:50:39 PM GMT-5
+  //12/15/2013 1:50:39 PM GMT-5
 
-//   console.log('end day')
-//     var expectation = [["December 13", "December 14", 2447],
-//       ["December 14", "December 15", 0],
-//       ["December 15", "December 16", 138]];
+  console.log('')
+console.log('start day')
+    var periods = NT.getAllPeriods(numbers);
 
-//     deepEqual(periods, expectation, 'the gap in days was filled ');
+  console.log('end day')
+    var expectation = [["December 13", "December 14", 2447],
+      ["December 14", "December 15", 0],
+      ["December 15", "December 16", 138]];
 
-// });
+    deepEqual(periods, expectation, 'the gap in days was filled ');
+
+});
 
 test('getAllPeriods - two periods with a gap without ajax - min', function() {
   NT.interval = "min"
@@ -175,7 +178,37 @@ test('getAllPeriods - two periods with a gap without ajax - min', function() {
 
 });
 
+test('getAllPeriods - two periods with a gap without ajax - hour (far apart)', function() {
+  NT.interval = "hour"
+  NT.useAjax = false;
 
+  var numbers = {1386950400: 2447, 1386961199: 138};
+
+  var periods = NT.getAllPeriods(numbers);
+
+  var expectation = [["11:00 AM", "12:00 PM", 2447],
+    ["12:00 PM", "1:00 PM", 0],
+    ["1:00 PM", "2:00 PM", 138]];
+
+  deepEqual(periods, expectation, 'the gap in minutes was filled ');
+
+});
+
+test('getAllPeriods - two periods with a gap without ajax - hour (close together)', function() {
+  NT.interval = "hour"
+  NT.useAjax = false;
+
+  var numbers = {1386953999: 2447, 1386957600: 138};
+
+  var periods = NT.getAllPeriods(numbers);
+
+  var expectation = [["11:00 AM", "12:00 PM", 2447],
+    ["12:00 PM", "1:00 PM", 0],
+    ["1:00 PM", "2:00 PM", 138]];
+
+  deepEqual(periods, expectation, 'the gap in minutes was filled ');
+
+});
 
 
 
@@ -238,3 +271,7 @@ test('getAllPeriods - two periods with a gap without ajax - min', function() {
 //     deepEqual(periods, expectation, 'end of period by day ');
 
 // });
+
+//////////
+//tests for getPeriodComparison
+

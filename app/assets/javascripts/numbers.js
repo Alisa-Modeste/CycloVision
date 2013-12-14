@@ -184,10 +184,10 @@
 
 
 			if (NT.interval == "month"){
-				periodGoal = moment(keys[i+1] *1000).month();
+				var periodGoal = moment(keys[i+1] *1000).month();
 			}
 			else if (NT.interval == "year"){
-				periodGoal = moment(keys[i+1] *1000).year();
+				var periodGoal = moment(keys[i+1] *1000).year();
 			}
 			else {
 				var periodGoal = keys[i+1];
@@ -195,7 +195,8 @@
 
 
 			var periodComparison = NT.getPeriodComparison(nextPeriod);
-			
+			console.log("periodComparison < periodGoal", periodComparison, periodGoal, periodGoal-periodComparison)
+			console.log(moment(periodComparison *1000).calendar(), moment(periodGoal *1000).calendar())
 			while ( keys[i+1] && ( periodComparison < periodGoal )){
 
 				period = NT.getPeriodStartEnd( nextPeriod );
@@ -211,7 +212,8 @@
 			
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 
-			}			
+			}		
+			console.log(periodGoal)	
 	
 		}
 
@@ -230,6 +232,7 @@
 			break;
 
 		case "day":
+			console.log(nextPeriod, nextPeriod + (3600*24-1))
 			periodComparison = nextPeriod + (3600*24-1)
 			break;
 

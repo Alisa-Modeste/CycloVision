@@ -145,17 +145,6 @@
 	};
 
 	NT.populateTable = function(numbers){
-		var periods = NT.getAllPeriods();
-
-		for (var i = 0; i < periods.length; i++) {
-			
-			$("#body-cells").append("<tr><td>"+ periods[i][0] +"</td><td>"+ periods[i][1] +"</td><td>"+periods[i][2] +"</td></tr>");
-		};
-		
-	};
-
-	NT.getAllPeriods = function(numbers){
-
 		if (!NT.useAjax){
 
 			var numbers = NT.getEmbeddedData();
@@ -167,6 +156,17 @@
 			console.log("ajax")
 		}
 
+		
+		var periods = NT.getAllPeriods(numbers);
+
+		for (var i = 0; i < periods.length; i++) {
+			
+			$("#body-cells").append("<tr><td>"+ periods[i][0] +"</td><td>"+ periods[i][1] +"</td><td>"+periods[i][2] +"</td></tr>");
+		};
+		
+	};
+
+	NT.getAllPeriods = function(numbers){
 
 		var keys = Object.keys(numbers).sort();
 		var periods = [];
@@ -204,19 +204,19 @@
 		return periods;
 	};
 
-	var changeDates = NT.changeDates = function(next){
-		sendRequest(next, NT.populateTable)
+	NT.changeDates = function(next){
+		NT.sendRequest(next, NT.populateTable)
 	};
 
-	var changeInterval = NT.changeInterval = function(newInterval){
+	NT.changeInterval = function(newInterval){
 		NT.interval = newInterval
 
-		sendRequest("same", NT.populateTable)
+		NT.sendRequest("same", NT.populateTable)
 		
 	};
 
 	//next - trilean logic - 2 for neutral
-	var sendRequest = NT.sendRequest = function(nextSet, callback){
+	NT.sendRequest = function(nextSet, callback){
 		$.ajax({
 			url: "/numbers",
 			dataType: "json",
@@ -246,7 +246,7 @@
 })(window);
 
 $(document).ready(function(){
-	if (location.port == 8888 || location.href.indexOf("localhost") != -1){
+	if (location.port == 8888 || location.href.indexOf("localhost:3000/qunit") != -1){
 		return
 	}
 	NT.populateTable()

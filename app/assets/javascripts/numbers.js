@@ -70,6 +70,9 @@
 				if (date.hour == 11){
 					periodEnd = "12:00" + date.merdian.other;
 				}
+				else if (date.hour == 12){
+					periodEnd = "1:00" + date.merdian.current;
+				}
 				else {
 					periodEnd = date.hour+1 + ":00" + date.merdian.current;
 				}

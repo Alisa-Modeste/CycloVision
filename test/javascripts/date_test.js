@@ -105,57 +105,65 @@ test('getAllPeriods - two neighborly periods without ajax - min', function() {
 
 });
 
-// test('getAllPeriods - two neighborly periods - hour', function() {
-//   NT.interval = "day"
+test('getAllPeriods - two neighborly periods without ajax - hour', function() {
+  NT.interval = "hour"
+  NT.useAjax = false;
 
-//     var stub = sinon.stub(NT, "getEmbeddedData", function(){
-//     console.log("I used this one")
-//     return {1386903537: 2447, 1386953890: 138}
+  var stub = sinon.stub(NT, "getEmbeddedData", function(){
+    console.log("I used this one")
+    return {1387043439: 2447, 1387047039: 138}
 
-//   });
+  });
 
-//     var periods = NT.getAllPeriods()
-//     var expectation = [["December 12", "December 13", 2447],
-//       ["December 13", "December 14", 138]];
+    var periods = NT.getAllPeriods()
+    var expectation = [["12:00 PM", "1:00 PM", 2447],
+      ["1:00 PM", "2:00 PM", 138]];
 
-//     deepEqual(periods, expectation, 'end of period by day ');
+    stub.restore();
 
-// });
+    deepEqual(periods, expectation, 'end of period by day ');
 
-// test('getAllPeriods - two neighborly periods - month', function() {
-//   NT.interval = "day"
+});
 
-//     var stub = sinon.stub(NT, "getEmbeddedData", function(){
-//     console.log("I used this one")
-//     return {1386903537: 2447, 1386953890: 138}
+test('getAllPeriods - two neighborly periods without ajax - month', function() {
+  NT.interval = "month"
+  NT.useAjax = false;
 
-//   });
+  var stub = sinon.stub(NT, "getEmbeddedData", function(){
+    console.log("I used this one")
+    return {1387047039: 2447, 1389725439: 138}
 
-//     var periods = NT.getAllPeriods()
-//     var expectation = [["December 12", "December 13", 2447],
-//       ["December 13", "December 14", 138]];
+  });
 
-//     deepEqual(periods, expectation, 'end of period by day ');
+    var periods = NT.getAllPeriods()
+    var expectation = [["December", "January", 2447],
+      ["January", "February", 138]];
 
-// });
+    stub.restore();
 
-// test('getAllPeriods - two neighborly periods - year', function() {
-//   NT.interval = "day"
+    deepEqual(periods, expectation, 'end of period by day ');
 
-//     var stub = sinon.stub(NT, "getEmbeddedData", function(){
-//     console.log("I used this one")
-//     return {1386903537: 2447, 1386953890: 138}
+});
 
-//   });
+test('getAllPeriods - two neighborly periods without ajax - year', function() {
+  NT.interval = "year"
+  NT.useAjax = false;
 
-//     var periods = NT.getAllPeriods()
-//     var expectation = [["December 12", "December 13", 2447],
-//       ["December 13", "December 14", 138]];
+  var stub = sinon.stub(NT, "getEmbeddedData", function(){
+    console.log("I used this one")
+    return {1387047039: 2447, 1389725439: 138}
 
-//     deepEqual(periods, expectation, 'end of period by day ');
+  });
 
-// });
+    var periods = NT.getAllPeriods()
+    var expectation = [[2013, 2014, 2447],
+      [2014, 2015, 138]];
 
+    stub.restore();
+
+    deepEqual(periods, expectation, 'end of period by day ');
+
+});
 
 
 // //Fill in the missing periods//////////

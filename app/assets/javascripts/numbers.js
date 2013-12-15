@@ -6,10 +6,29 @@
 	var NT = root.NT = (root.NT || {} );
 
 	NT.interval = "day";
-	NT.rangeLength = 30;
+	// NT.rangeLength = 30;
 	NT.offset = 0;
 	NT.nextSet = 2; //neither true nor false
 	NT.useAjax = false;
+	NT.ending, NT.beginning;
+
+	// NT.setInterval = function(interval){
+
+	// 	switch(interval){
+	// 	case "minute":
+	// 		break;
+	// 	case "hour":
+	// 		break;
+	// 	case "day":
+	// 		break;
+	// 	case ""
+	// 	}
+	// }
+
+	// NT.getInterval = function(){
+
+		
+	// }
 
 	NT.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
@@ -121,20 +140,19 @@
 
 
 
-	NT.getRangeStart = function(){
-		return moment(NT.ending*1000).subtract(NT.interval, NT.rangeLength)._d.getTime() / 1000;
+	// NT.getRangeStart = function(){
+	// 	return moment(NT.ending*1000).subtract(NT.interval, NT.rangeLength)._d.getTime() / 1000;
 
-	};
+	// };
 
-	NT.getRangeEnd = function(){
-		return moment(NT.beginning *1000).add(NT.interval, NT.rangeLength)._d.getTime() / 1000;
+	// NT.getRangeEnd = function(){
+	// 	return moment(NT.beginning *1000).add(NT.interval, NT.rangeLength)._d.getTime() / 1000;
 
-	};
+	// };
 
 
 
-	NT.ending = new Date();
-	NT.beginning = NT.getRangeStart();
+	
 
 
 	NT.getEmbeddedData = function(){
@@ -166,8 +184,15 @@
 		
 	};
 
+	NT.placeEndpoints(){
+		console.log("I need to be written!!!!!!!!!!!!!!!!!! - NT.placeEndpoints()")
+
+	}
+
 	NT.getAllPeriods = function(numbers){
 		var keys = Object.keys(numbers).sort();
+		NT.beginning = keys[0], NT.ending = keys[ keys.length-1 ];
+
 		var periods = [], labels = [], values = [];
 
 		for (var i=0; i< keys.length; i++){
@@ -271,6 +296,7 @@
 
 		NT.createChart(labels, values)
 		NT.populateTable(periods)
+		NT.placeEndpoints()
 
 	};
 

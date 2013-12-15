@@ -3,7 +3,7 @@ require "number"
 
 describe Number do
 
-	it "it returns timestamp and total when interval is day ending with the same set" do
+	it "::period_record returns timestamp and total when interval is day ending with the same set" do
 		number = Number.create(number: 5)
 		number.created_at = Time.at(1386669978).utc
 		number.save

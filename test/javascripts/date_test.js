@@ -397,74 +397,7 @@ test('getAllPeriods - two periods with a gap without ajax - year (far apart)', f
 
 //////////
 //tests for getPeriodComparison
-// NT.getRangeStart
-test('getRangeStart - interval: day', function() {
-  NT.interval = "day";
-  NT.rangeLength = 30;
-  NT.ending = 1387123503;
-
-  //1384531503000
-  var start = NT.getRangeStart()
-
-  equal(start, 1384531503, 'beginning of range is correct');
-});
-
-test('getRangeStart - interval: minute', function() {
-  NT.interval = "minute";
-  NT.rangeLength = 30;
-  NT.ending = 1387123503;
-
-  //1384531503000
-  var start = NT.getRangeStart()
-
-  equal(start, 1384531503, 'beginning of range is correct');
-});
-
-test('getRangeStart - interval: hour', function() {
-  NT.interval = "hour";
-  NT.rangeLength = 24;
-  NT.ending = 1387123503;
-
-  //1384531503000
-  var start = NT.getRangeStart()
-
-  equal(start, 1384531503, 'beginning of range is correct');
-});
-
-test('getRangeStart - interval: month', function() {
-  NT.interval = "day";
-  NT.rangeLength = 12;
-  NT.ending = 1387123503;
-
-  //1384531503000
-  var start = NT.getRangeStart()
-
-  equal(start, 1384531503, 'beginning of range is correct');
-});
-
-test('getRangeStart - interval: year', function() {
-  NT.interval = "day";
-  NT.rangeLength = 10;
-  NT.ending = 1387123503;
-
-  //1384531503000
-  var start = NT.getRangeStart()
-
-  equal(start, 1384531503, 'beginning of range is correct');
-});
-
-test('getRangeEnd - interval: day', function() {
-  NT.interval = "day";
-  NT.rangeLength = 30;
-  NT.beginning = 1387123503;
-
-  //1384531503000
-  var ending = NT.getRangeEnd()
-
-  equal(ending, 1389715503, 'end of range is correct');
-});
-
-// NT.getRangeEnd
+// NT.placeEndpoints()
 // NT.changeDates
 // NT.changeInterval
 // NT.sendRequest

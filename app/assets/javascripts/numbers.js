@@ -175,13 +175,8 @@
 			var period = NT.getPeriodStartEnd(keys[i]);
 			periods.push( [ period[0], period[1], numbers[keys[i]] ] );
 
-			// if (NT.interval == "minute"){
-			// 	var nextPeriod = parseInt(keys[i]) + 60;
-			// }
-			// else {
-				var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
-			//}
-
+			
+			var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
 
 			if (NT.interval == "year"){
 				var periodGoal = moment(keys[i+1] *1000).year();
@@ -192,20 +187,13 @@
 
 
 			var periodComparison = NT.getPeriodComparison(nextPeriod);
-
+			console.log("interval", NT.interval, periodComparison, periodGoal)
 			while ( keys[i+1] && ( periodComparison < periodGoal )){
 
 				period = NT.getPeriodStartEnd( nextPeriod );
-
 				periods.push( [ period[0], period[1], 0 ] );
 
-				// if (NT.interval == "min"){
-				// 	nextPeriod = nextPeriod +60;
-				// }
-				// else {
-					nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
-				//}
-			
+				nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 
 			}		
@@ -216,22 +204,13 @@
 	};
 
 	NT.getPeriodComparison = function(nextPeriod){
-		var periodComparison;
-
-		switch (NT.interval){
-		// case "min":
-		// 	periodComparison = nextPeriod+59;
-		// 	break;
-
-		case "year":
-			periodComparison = (moment(nextPeriod*1000).year() +1);
-			break;
-
-		default:
-			periodComparison = moment(nextPeriod *1000).endOf(NT.interval)._d.getTime() / 1000;
+		if (NT.interval == "year"){
+			return (moment(nextPeriod*1000).year());
+		} 
+		else {
+			return moment(nextPeriod *1000).endOf(NT.interval)._d.getTime() / 1000;
 		}
 
-		return periodComparison;
 	};
 
 	NT.changeDates = function(next){

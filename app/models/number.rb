@@ -1,11 +1,11 @@
 class Number < ActiveRecord::Base
   attr_accessible :number
 
-  def self.period_record(limit, data)
+  def self.period_record(data)
 
   	unless data
   		data = {
-  			interval: 'day',
+  			interval: 'hour',#NOTE: default to day
   			nextSet: "same", #find those preceeding today's time
   			includeSelf: true, #find those with today's time
   			endDate: Time.now,
@@ -16,18 +16,6 @@ class Number < ActiveRecord::Base
 
 	totals_with_timestamp = {}
 
-	# bookend, equality = case data[:nextSet]
-	# when "next"
-	# 	[data[:endDate], ">="]
-	# when "previous"
-	# 	[data[:startDate], "<="]
-	# when "same"
-	# 	[data[:endDate], "<="]
-	# else
-	# 	return false
-	# end
-
-
 	interval_away = case data[:interval]
 	when "minute" then 30.minutes
 	when "hour" then 24.hours
@@ -35,21 +23,6 @@ class Number < ActiveRecord::Base
 	when "month" then 12.months
 	when "year" then 10.years
 	end
-
-	# some_time_ago  = Time.at(bookend).utc
-	# interval_away = some_time_ago - interval_away
-
-
-	# from, to = case data[:nextSet]
-	# when "next"
-	# 	[ Time.at(bookend).utc, (Time.at(bookend).utc + interval_away) ]
-	# when "previous"
-	# 	[ (Time.at(bookend).utc - interval_away), Time.at(bookend).utc ]
-	# when "same"
-	# 	[ (Time.at(bookend).utc - interval_away), Time.at(bookend).utc ]
-	# else
-	# 	return false
-	# end
 
 	if data[:nextSet] == "next"
 		bookend = data[:endDate]
@@ -68,10 +41,6 @@ class Number < ActiveRecord::Base
 	end
 
 	bookend = bookend.to_i if bookend.is_a? String
-	#totals = Number.limit(limit).offset( data[:offset] ).where('created_at ' + equality + ' :some_time_ago', :some_time_ago  => Time.at(bookend).utc)
-	#totals = Number.where('created_at ' + equality + ' :some_time_ago and created_at ', :some_time_ago  => Time.at(bookend).utc)
-	#totals = Number.where('created_at <= :some_time_ago and created_at >= :some_interval_away',
-	#totals = Number.where('created_at >= :some_interval_away and created_at <= :some_time_ago',
 
 	totals = Number.where('created_at >= :from and created_at <= :to',
 		 :from  => from,

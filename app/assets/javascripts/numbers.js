@@ -171,12 +171,14 @@
 
 	NT.getAllPeriods = function(numbers){
 		var keys = Object.keys(numbers).sort();
-		var periods = [];
+		var periods = [], labels = [], values = [];
 
 		for (var i=0; i< keys.length; i++){
 
 			var period = NT.getPeriodStartEnd(keys[i]);
 			periods.push( [ period[0], period[1], numbers[keys[i]] ] );
+			labels.push( period[0] );
+			values.push( numbers[keys[i]] );
 
 			
 			var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
@@ -195,6 +197,8 @@
 
 				period = NT.getPeriodStartEnd( nextPeriod );
 				periods.push( [ period[0], period[1], 0 ] );
+				labels.push( period[0] );
+				values.push( 0 );
 
 				nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
@@ -203,7 +207,7 @@
 	
 		}
 
-		return periods;
+		return {everything: periods, labels: labels, values: values};
 	};
 
 	NT.getPeriodComparison = function(nextPeriod){
@@ -265,12 +269,13 @@
 
 
 		var periods = NT.getAllPeriods(numbers);
-		var labels = [], values = [];
+		var labels = periods['labels'], values = periods['values'];
+		periods = periods['everything'];
 
-		for (var i = 0; i < periods.length; i++) {
-			labels.push( periods[i][0] );
-			values.push( periods[i][2] );
-		};
+		// for (var i = 0; i < periods.length; i++) {
+		// 	labels.push( periods[i][0] );
+		// 	values.push( periods[i][2] );
+		// };
 
 		NT.createChart(labels, values)
 		NT.populateTable(periods)

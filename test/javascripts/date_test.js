@@ -149,14 +149,16 @@ test('getAllPeriods - two periods with a gap without ajax - day', function() {
   //12/13/2013 6:50:39 PM GMT-5
   //12/15/2013 1:50:39 PM GMT-5
 
-  console.log('')
-console.log('start day')
     var periods = NT.getAllPeriods(numbers);
 
-  console.log('end day')
-    var expectation = [["December 13", "December 14", 2447],
+    var expectation = {
+      "everything": [["December 13", "December 14", 2447],
       ["December 14", "December 15", 0],
-      ["December 15", "December 16", 138]];
+      ["December 15", "December 16", 138]],
+      "labels": ["December 13", "December 14", "December 15"],
+      "values": [2447, 0, 138]
+
+    };
 
     deepEqual(periods, expectation, 'the gap in days was filled ');
 
@@ -170,9 +172,14 @@ test('getAllPeriods - two periods with a gap without ajax - min (far apart)', fu
 
   var periods = NT.getAllPeriods(numbers);
 
-  var expectation = [["11:58 AM", "11:59 AM", 2447],
+  var expectation = {
+      "everything": [["11:58 AM", "11:59 AM", 2447],
     ["11:59 AM", "12:00 PM", 0],
-    ["12:00 PM", "12:01 PM", 138]];
+    ["12:00 PM", "12:01 PM", 138]],
+      "labels": ["11:58 AM", "11:59 AM", "12:00 PM"],
+      "values": [2447, 0, 138]
+
+    };
 
   deepEqual(periods, expectation, 'the gap in minutes was filled ');
 
@@ -186,9 +193,14 @@ test('getAllPeriods - two periods with a gap without ajax - min (close together)
 
   var periods = NT.getAllPeriods(numbers);
 
-  var expectation = [["11:58 AM", "11:59 AM", 2447],
+  var expectation = {
+      "everything": [["11:58 AM", "11:59 AM", 2447],
     ["11:59 AM", "12:00 PM", 0],
-    ["12:00 PM", "12:01 PM", 138]];
+    ["12:00 PM", "12:01 PM", 138]],
+      "labels": ["11:58 AM", "11:59 AM", "12:00 PM"],
+      "values": [2447, 0, 138]
+
+    };
 
   deepEqual(periods, expectation, 'the gap in minutes was filled ');
 
@@ -202,9 +214,14 @@ test('getAllPeriods - two periods with a gap without ajax - hour (far apart)', f
 
   var periods = NT.getAllPeriods(numbers);
 
-  var expectation = [["11:00 AM", "12:00 PM", 2447],
+  var expectation = {
+      "everything": [["11:00 AM", "12:00 PM", 2447],
     ["12:00 PM", "1:00 PM", 0],
-    ["1:00 PM", "2:00 PM", 138]];
+    ["1:00 PM", "2:00 PM", 138]],
+      "labels": ["11:00 AM", "12:00 PM", "1:00 PM"],
+      "values": [2447, 0, 138]
+
+    };
 
   deepEqual(periods, expectation, 'the gap in minutes was filled ');
 
@@ -218,9 +235,14 @@ test('getAllPeriods - two periods with a gap without ajax - hour (close together
 
   var periods = NT.getAllPeriods(numbers);
 
-  var expectation = [["11:00 AM", "12:00 PM", 2447],
+  var expectation = {
+      "everything": [["11:00 AM", "12:00 PM", 2447],
     ["12:00 PM", "1:00 PM", 0],
-    ["1:00 PM", "2:00 PM", 138]];
+    ["1:00 PM", "2:00 PM", 138]],
+      "labels": ["11:00 AM", "12:00 PM", "1:00 PM"],
+      "values": [2447, 0, 138]
+
+    };
 
   deepEqual(periods, expectation, 'the gap in minutes was filled ');
 
@@ -234,9 +256,14 @@ test('getAllPeriods - two periods with a gap without ajax - month (far apart)', 
   var numbers = {1380600000: 2447, 1388512799: 138}
 
     var periods = NT.getAllPeriods(numbers);
-    var expectation = [["October", "November", 2447],
+    var expectation = {
+      "everything": [["October", "November", 2447],
       ["November", "December", 0],
-      ["December", "January", 138]];
+      ["December", "January", 138]],
+      "labels": ["October", "November", "December"],
+      "values": [2447, 0, 138]
+
+    };
 
     deepEqual(periods, expectation, 'end of period by day ');
 
@@ -249,9 +276,14 @@ test('getAllPeriods - two periods with a gap without ajax - month (far apart) in
   var numbers = {1383278400: 2447, 1391191199: 138}
 
     var periods = NT.getAllPeriods(numbers);
-    var expectation = [["November", "December", 2447],
+    var expectation = {
+      "everything": [["November", "December", 2447],
       ["December", "January", 0],
-      ["January", "February", 138]];
+      ["January", "February", 138]],
+      "labels": ["November", "December", "January"],
+      "values": [2447, 0, 138]
+
+    };
 
     deepEqual(periods, expectation, 'end of period by day ');
 
@@ -264,9 +296,14 @@ test('getAllPeriods - two periods with a gap without ajax - month (close togethe
   var numbers = {1385834399: 2447, 1388552400: 138}
 
     var periods = NT.getAllPeriods(numbers);
-    var expectation = [["November", "December", 2447],
+    var expectation = {
+      "everything": [["November", "December", 2447],
       ["December", "January", 0],
-      ["January", "February", 138]];
+      ["January", "February", 138]],
+      "labels": ["November", "December", "January"],
+      "values": [2447, 0, 138]
+
+    };
 
     deepEqual(periods, expectation, 'end of period by day ');
 
@@ -280,9 +317,14 @@ test('getAllPeriods - two periods with a gap without ajax - year (close together
   var numbers = {1388512799: 2447, 1420088400: 138}
 
     var periods = NT.getAllPeriods(numbers);
-    var expectation = [[2013, 2014, 2447],
+    var expectation = {
+      "everything": [[2013, 2014, 2447],
       [2014, 2015, 0],
-      [2015, 2016, 138]];
+      [2015, 2016, 138]],
+      "labels": [2013, 2014, 2015],
+      "values": [2447, 0, 138]
+
+    };
 
     deepEqual(periods, expectation, 'end of period by day ');
 
@@ -295,9 +337,14 @@ test('getAllPeriods - two periods with a gap without ajax - year (far apart)', f
   var numbers = {1357016400: 2447, 1451584799: 138}
 
     var periods = NT.getAllPeriods(numbers);
-    var expectation = [[2013, 2014, 2447],
+    var expectation = {
+      "everything": [[2013, 2014, 2447],
       [2014, 2015, 0],
-      [2015, 2016, 138]];
+      [2015, 2016, 138]],
+      "labels": [2013, 2014, 2015],
+      "values": [2447, 0, 138]
+
+    };
 
     deepEqual(periods, expectation, 'end of period by day ');
 

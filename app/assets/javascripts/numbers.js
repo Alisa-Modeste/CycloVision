@@ -272,11 +272,6 @@
 		var labels = periods['labels'], values = periods['values'];
 		periods = periods['everything'];
 
-		// for (var i = 0; i < periods.length; i++) {
-		// 	labels.push( periods[i][0] );
-		// 	values.push( periods[i][2] );
-		// };
-
 		NT.createChart(labels, values)
 		NT.populateTable(periods)
 
@@ -287,7 +282,7 @@
 })(window);
 
 $(document).ready(function(){
-	if (location.port == 8888 || location.href.indexOf("localhost:3000/qunit") != -1){
+	if (location.href.indexOf("localhost:3000/qunit") != -1){
 		return
 	}
 	NT.renderInfo()

@@ -6,7 +6,7 @@
 	var NT = root.NT = (root.NT || {} );
 
 	NT.interval = "day";
-	NT.rangeLength = 12;
+	NT.rangeLength = 30;
 	NT.offset = 0;
 	NT.nextSet = 2; //neither true nor false
 	NT.useAjax = false;
@@ -122,14 +122,12 @@
 
 
 	NT.getRangeStart = function(){
-		return moment(NT.ending.getFullYear() +"-"+ (NT.ending.getMonth()+1) +"-"+
-		 NT.ending.getDate()).subtract(NT.interval, NT.rangeLength)._d
+		return moment(NT.ending*1000).subtract(NT.interval, NT.rangeLength)._d.getTime() / 1000;
 
 	};
 
 	NT.getRangeEnd = function(){
-		return moment(NT.beginning.getFullYear() +"-"+ (NT.beginning.getMonth()+1) +"-"+
-		 NT.beginning.getDate()).add(NT.interval, NT.rangeLength)._d
+		return moment(NT.beginning *1000).add(NT.interval, NT.rangeLength)._d.getTime() / 1000;
 
 	};
 
@@ -161,7 +159,6 @@
 	};
 
 	NT.populateTable = function(periods){
-		console.log(periods)
 		for (var i = 0; i < periods.length; i++) {
 			
 			$("#body-cells").append("<tr><td>"+ periods[i][0] +"</td><td>"+ periods[i][1] +"</td><td>"+periods[i][2] +"</td></tr>");

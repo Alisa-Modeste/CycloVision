@@ -1,67 +1,65 @@
-test('The current and next month', function() {
+test('getPeriodStartEnd - The current and next month', function() {
   NT.interval = "month"
   
     period = NT.getPeriodStartEnd(1386777583)
 
-  equal(period[0], "December", 'beginning of period by month ');
-  equal(period[1], "January", 'end of period by month ');
+  equal(period[0], "December", 'beginning of period in months ');
+  equal(period[1], "January", 'end of period in months ');
 });
 
-test('The current and next hour - AM', function() {
+test('getPeriodStartEnd - The current and next hour - AM', function() {
   NT.interval = "hour"
   
     period = NT.getPeriodStartEnd(1386777583)
 
-  equal(period[0], "10:00 AM", 'beginning of period by hour ');
-  equal(period[1], "11:00 AM", 'end of period by hour ');
+  equal(period[0], "10:00 AM", 'beginning of period in hours ');
+  equal(period[1], "11:00 AM", 'end of period in hours ');
 });
 
-test('The current and next minute - AM', function() {
+test('getPeriodStartEnd - The current and next minute - AM', function() {
   NT.interval = "minute"
   
     period = NT.getPeriodStartEnd(1386777583)
 
-  equal(period[0], "10:59 AM", 'beginning of period by hour ');
-  equal(period[1], "11:00 AM", 'end of period by hour ');
+  equal(period[0], "10:59 AM", 'beginning of period in minutes ');
+  equal(period[1], "11:00 AM", 'end of period in minutes ');
 });
 
-test('The current and next hour - PM', function() {
+test('getPeriodStartEnd - The current and next hour - PM', function() {
   NT.interval = "hour"
   
     period = NT.getPeriodStartEnd(1386813239)
 
-  equal(period[0], "8:00 PM", 'beginning of period by hour ');
-  equal(period[1], "9:00 PM", 'end of period by hour ');
+  equal(period[0], "8:00 PM", 'beginning of period in hours ');
+  equal(period[1], "9:00 PM", 'end of period in hours ');
 });
 
-test('The current and next minute - PM', function() {
+test('getPeriodStartEnd - The current and next minute - PM', function() {
   NT.interval = "minute"
   
     period = NT.getPeriodStartEnd(1386813239)
 
-  equal(period[0], "8:53 PM", 'beginning of period by hour ');
-  equal(period[1], "8:54 PM", 'end of period by hour ');
+  equal(period[0], "8:53 PM", 'beginning of period in minutes ');
+  equal(period[1], "8:54 PM", 'end of period in minutes ');
 });
 
-test('The current and next year', function() {
+test('getPeriodStartEnd - The current and next year', function() {
   NT.interval = "year"
   
     period = NT.getPeriodStartEnd(1386813239)
 
-  equal(period[0], "2013", 'beginning of period by year ');
-  equal(period[1], "2014", 'end of period by year ');
+  equal(period[0], "2013", 'beginning of period in years ');
+  equal(period[1], "2014", 'end of period in years ');
 });
 
-test('The current and next day', function() {
+test('getPeriodStartEnd - The current and next day', function() {
   NT.interval = "day"
   
     period = NT.getPeriodStartEnd(1386777583)
 
-  equal(period[0], "December 11", 'beginning of period by day ');
-  equal(period[1], "December 12", 'end of period by day ');
+  equal(period[0], "December 11", 'beginning of period in days ');
+  equal(period[1], "December 12", 'end of period in days ');
 });
-
-// Wrap getEmbeddedData
 
 //Get the periods//////////
 
@@ -80,7 +78,7 @@ test('getAllPeriods - two neighborly periods without ajax - day', function() {
 
     };
 
-  deepEqual(periods, expectation, 'end of period by day ');
+  deepEqual(periods, expectation, 'periods found for days ');
 
 });
 
@@ -99,7 +97,7 @@ test('getAllPeriods - two neighborly periods without ajax - min', function() {
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'periods found for minutes ');
 
 });
 
@@ -118,7 +116,7 @@ test('getAllPeriods - two neighborly periods without ajax - hour', function() {
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'periods found for hours ');
 
 });
 
@@ -137,7 +135,7 @@ test('getAllPeriods - two neighborly periods without ajax - month', function() {
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'periods found for months ');
 
 });
 
@@ -158,18 +156,41 @@ test('getAllPeriods - two neighborly periods without ajax - year', function() {
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'periods found for years ');
 
 });
 
 
 // //Fill in the missing periods//////////
 
-test('getAllPeriods - two periods with a gap without ajax - day', function() {
+test('getAllPeriods - two periods with a gap without ajax - day (far apart)', function() {
   NT.interval = "day"
   NT.useAjax = false;
 
-  var numbers = {1386978639: 2447, 1387133439: 138};
+  var numbers = {1386910800: 2447, 1387169999: 138};
+  //12/13/2013 6:50:39 PM GMT-5
+  //12/15/2013 1:50:39 PM GMT-5
+
+    var periods = NT.getAllPeriods(numbers);
+
+    var expectation = {
+      "everything": [["December 13", "December 14", 2447],
+      ["December 14", "December 15", 0],
+      ["December 15", "December 16", 138]],
+      "labels": ["December 13", "December 14", "December 15"],
+      "values": [2447, 0, 138]
+
+    };
+
+    deepEqual(periods, expectation, 'the gap in days was filled ');
+
+});
+
+test('getAllPeriods - two periods with a gap without ajax - day (close together)', function() {
+  NT.interval = "day"
+  NT.useAjax = false;
+
+  var numbers = {1386997199: 2447, 1387083600: 138};
   //12/13/2013 6:50:39 PM GMT-5
   //12/15/2013 1:50:39 PM GMT-5
 
@@ -247,7 +268,7 @@ test('getAllPeriods - two periods with a gap without ajax - hour (far apart)', f
 
     };
 
-  deepEqual(periods, expectation, 'the gap in minutes was filled ');
+  deepEqual(periods, expectation, 'the gap in hours was filled ');
 
 });
 
@@ -268,7 +289,7 @@ test('getAllPeriods - two periods with a gap without ajax - hour (close together
 
     };
 
-  deepEqual(periods, expectation, 'the gap in minutes was filled ');
+  deepEqual(periods, expectation, 'the gap in hours was filled ');
 
 });
 
@@ -289,7 +310,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (far apart)', 
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'the gap in months was filled ');
 
 });
 
@@ -309,7 +330,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (far apart) in
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'the gap in months was filled ');
 
 });
 
@@ -329,7 +350,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (close togethe
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'the gap in months was filled ');
 
 });
 
@@ -350,7 +371,7 @@ test('getAllPeriods - two periods with a gap without ajax - year (close together
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'the gap in years was filled ');
 
 });
 
@@ -370,10 +391,80 @@ test('getAllPeriods - two periods with a gap without ajax - year (far apart)', f
 
     };
 
-    deepEqual(periods, expectation, 'end of period by day ');
+    deepEqual(periods, expectation, 'the gap in years was filled ');
 
 });
 
 //////////
 //tests for getPeriodComparison
+// NT.getRangeStart
+test('getRangeStart - interval: day', function() {
+  NT.interval = "day";
+  NT.rangeLength = 30;
+  NT.ending = 1387123503;
 
+  //1384531503000
+  var start = NT.getRangeStart()
+
+  equal(start, 1384531503, 'beginning of range is correct');
+});
+
+test('getRangeStart - interval: minute', function() {
+  NT.interval = "minute";
+  NT.rangeLength = 30;
+  NT.ending = 1387123503;
+
+  //1384531503000
+  var start = NT.getRangeStart()
+
+  equal(start, 1384531503, 'beginning of range is correct');
+});
+
+test('getRangeStart - interval: hour', function() {
+  NT.interval = "hour";
+  NT.rangeLength = 24;
+  NT.ending = 1387123503;
+
+  //1384531503000
+  var start = NT.getRangeStart()
+
+  equal(start, 1384531503, 'beginning of range is correct');
+});
+
+test('getRangeStart - interval: month', function() {
+  NT.interval = "day";
+  NT.rangeLength = 12;
+  NT.ending = 1387123503;
+
+  //1384531503000
+  var start = NT.getRangeStart()
+
+  equal(start, 1384531503, 'beginning of range is correct');
+});
+
+test('getRangeStart - interval: year', function() {
+  NT.interval = "day";
+  NT.rangeLength = 10;
+  NT.ending = 1387123503;
+
+  //1384531503000
+  var start = NT.getRangeStart()
+
+  equal(start, 1384531503, 'beginning of range is correct');
+});
+
+test('getRangeEnd - interval: day', function() {
+  NT.interval = "day";
+  NT.rangeLength = 30;
+  NT.beginning = 1387123503;
+
+  //1384531503000
+  var ending = NT.getRangeEnd()
+
+  equal(ending, 1389715503, 'end of range is correct');
+});
+
+// NT.getRangeEnd
+// NT.changeDates
+// NT.changeInterval
+// NT.sendRequest

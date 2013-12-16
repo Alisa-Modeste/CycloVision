@@ -6,29 +6,10 @@
 	var NT = root.NT = (root.NT || {} );
 
 	NT.interval = "day";
-	// NT.rangeLength = 30;
-	NT.offset = 0;
-	NT.nextSet = 2; //neither true nor false
+	NT.nextSet = "same"; //or "next" or "previous"
 	NT.useAjax = false;
 	NT.ending, NT.beginning;
-
-	// NT.setInterval = function(interval){
-
-	// 	switch(interval){
-	// 	case "minute":
-	// 		break;
-	// 	case "hour":
-	// 		break;
-	// 	case "day":
-	// 		break;
-	// 	case ""
-	// 	}
-	// }
-
-	// NT.getInterval = function(){
-
-		
-	// }
+	var initialized = false;
 
 	NT.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
@@ -139,28 +120,13 @@
 	};
 
 
-
-	// NT.getRangeStart = function(){
-	// 	return moment(NT.ending*1000).subtract(NT.interval, NT.rangeLength)._d.getTime() / 1000;
-
-	// };
-
-	// NT.getRangeEnd = function(){
-	// 	return moment(NT.beginning *1000).add(NT.interval, NT.rangeLength)._d.getTime() / 1000;
-
-	// };
-
-
-
-	
-
-
 	NT.getEmbeddedData = function(){
 		return JSON.parse($("#first-set").html());
 
 	};
 
 	NT.createChart = function(labels, values){
+		console.log("In charts")
 		var data = {
 			labels : labels,
 			datasets : [
@@ -172,8 +138,27 @@
 			]
 		};
 
-		var ctx = document.getElementById("myChart").getContext("2d");
-		var myNewChart = new Chart(ctx).Bar(data);
+		// var mychart = new AwesomeChart('myChart');
+  //       mychart.title = "Jumping Jack Records";
+  //       mychart.data = values
+  //       mychart.labels = labels
+  //       mychart.draw();
+		
+
+	// 	if (!initialized){
+			var ctx = $("#myChart").get(0).getContext("2d");
+		var myNewChart = new Chart(ctx)
+		//NT.myNewChart = new Chart(ctx)
+		myNewChart.Bar(data);
+	// 	initialized = true;
+	// }
+	// else{
+	// 	console.log("Ir'd false")
+		
+	// 	//ctx.clearRect(0, 0, 1200, 400)
+	// 	NT.myNewChart.Bar(data);
+	// }
+
 	};
 
 	NT.populateTable = function(periods){
@@ -184,7 +169,7 @@
 		
 	};
 
-	NT.placeEndpoints(){
+	NT.placeEndpoints = function(){
 		console.log("I need to be written!!!!!!!!!!!!!!!!!! - NT.placeEndpoints()")
 
 	}
@@ -260,11 +245,11 @@
 			data: {
 				request: {
 					nextSet: nextSet,
-					startDate: Date.parse(NT.beginning)/1000,
-					endDate: Date.parse(NT.ending)/1000,
-					timezoneOffset: NT.ending.getTimezoneOffset(),
-					interval: NT.interval,
-					offset: NT.offset
+					startDate: NT.beginning,
+					endDate: NT.ending,
+					//timezoneOffset: NT.ending.getTimezoneOffset(),
+					interval: NT.interval//,
+					//offset: NT.offset
 				}
 			},
 			error: function(){
@@ -291,6 +276,7 @@
 
 
 		var periods = NT.getAllPeriods(numbers);
+		console.log("these are the periods", periods)
 		var labels = periods['labels'], values = periods['values'];
 		periods = periods['everything'];
 

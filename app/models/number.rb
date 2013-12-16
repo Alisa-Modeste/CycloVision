@@ -5,14 +5,15 @@ class Number < ActiveRecord::Base
 
   	unless data
   		data = {
-  			interval: 'hour',#NOTE: default to day
+  			interval: 'day',#NOTE: default to day
   			nextSet: "same", #find those preceeding today's time
-  			includeSelf: true, #find those with today's time
-  			endDate: Time.now,
-  			timezoneOffset: 0,
-  			offset: 0
+  			#includeSelf: true, #find those with today's time
+  			endDate: Time.now #,
+  			# timezoneOffset: 0,
+  			# offset: 0
   		}
   	end
+  	p "data is", data
 
 	totals_with_timestamp = {}
 
@@ -25,22 +26,22 @@ class Number < ActiveRecord::Base
 	end
 
 	if data[:nextSet] == "next"
-		bookend = data[:endDate]
+		bookend = data[:endDate].to_i
 		from, to = [ Time.at(bookend).utc, (Time.at(bookend).utc + interval_away) ]
 		
 	elsif data[:nextSet] == "previous"
-		bookend = data[:startDate]
+		bookend = data[:startDate].to_i
 		from, to = [ (Time.at(bookend).utc - interval_away), Time.at(bookend).utc ]
 		
 	elsif data[:nextSet] == "same"
-		bookend = data[:endDate]
+		bookend = data[:endDate].to_i
 		from, to = [ (Time.at(bookend).utc - interval_away), Time.at(bookend).utc ]
 		
 	else
 		return false
 	end
 
-	bookend = bookend.to_i if bookend.is_a? String
+	p "I passed the return"
 
 	totals = Number.where('created_at >= :from and created_at <= :to',
 		 :from  => from,
@@ -59,7 +60,7 @@ class Number < ActiveRecord::Base
 		totals_with_timestamp[ time ] = value
 	end
 
-	totals_with_timestamp
+	totals.empty? ? { from.to_i => 0, to.to_i => 0 } : totals_with_timestamp
 
   end
 

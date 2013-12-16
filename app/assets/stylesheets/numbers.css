@@ -4,6 +4,11 @@
 	padding-left:30px;
 }
 
+#previous:hover {
+	text-decoration: underline;
+	cursor:pointer;
+}
+
 #selector-container-parent{
 	margin: 0 auto; 
 	width:300px; 
@@ -25,4 +30,9 @@
 	float:right; 
 	width:300px; 
 	text-align: center
+}
+
+#next:hover {
+	text-decoration: underline;
+	cursor:pointer;
 }

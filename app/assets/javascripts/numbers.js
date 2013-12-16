@@ -161,14 +161,34 @@
 		periods.push( [ period[0], period[1], value ] );
 		labels.push( period[0] );
 		values.push( value );
-		//return
+
+		if ( $.isEmptyObject(numbers) ){
+			console.log(period, "there's period", value)
+		}
+
 	}
 
 
 	NT.getAllPeriods = function(numbers){
-		var keys = Object.keys(numbers).sort();
 
 		periods = [], labels = [], values = [];
+
+		if ( $.isEmptyObject(numbers) ){
+			var periodGoal = NT.ending;
+			var nextPeriod = NT.beginning, periodComparison;
+
+			while (nextPeriod == NT.beginning || periodComparison < periodGoal){
+				NT.storePeriod(nextPeriod, periodGoal, {});
+				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
+				periodComparison = NT.getPeriodComparison(nextPeriod);
+
+			}
+//remove goal
+			NT.storePeriod(periodGoal, periodGoal, {});
+			return {everything: periods, labels: labels, values: values};
+		}
+
+		var keys = Object.keys(numbers).sort();
 
 		for (var i=0; i< keys.length; i++){
 
@@ -281,8 +301,8 @@
 
 		$("#period-title").html("<h2>" + from + " to " + to + "</h2>")
 
-		$("#previous").html("View Previous " + NT.interval + "s");
-		$("#next").html("View Next " + NT.interval + "s");
+		$("#previous").html("View previous " + NT.interval + "s");
+		$("#next").html("View later " + NT.interval + "s");
 
 	}
 
@@ -314,12 +334,8 @@
 
 	NT.setupEventHandlers = function(){
 		$("#selector-container select").change(function(data){
-			console.log("This is the data from handler", data)
-			console.log("This is the this", $(this))
 
 			var selected = $( "#selector-container select option:selected" ).text()
-			console.log(selected, typeof(selected))
-
 			NT.changeInterval(selected);
 
 		});

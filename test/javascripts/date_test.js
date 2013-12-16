@@ -395,8 +395,34 @@ test('getAllPeriods - two periods with a gap without ajax - year (far apart)', f
 
 });
 
+//getAllPeriods - test for completely empty period
+test('getAllPeriods - get period when there is no data for the range', function() {
+  NT.interval = "year"
+  NT.useAjax = false;
+
+  var numbers = {}
+  NT.beginning = 1387219350;
+  NT.ending = 1513449750;
+
+    var periods = NT.getAllPeriods(numbers);
+    var expectation = {
+      "everything": [[2013, 2014, 0],
+      [2014, 2015, 0],
+      [2015, 2016, 0],
+      [2016, 2017, 0],
+      [2017, 2018, 0]],
+      "labels": [2013, 2014, 2015, 2016, 2017],
+      "values": [0, 0, 0, 0, 0]
+
+    };
+
+    deepEqual(periods, expectation, 'the gap in years was filled ');
+
+});
+
 //getAllPeriods test with NT.beginning
 //getAllPeriods - where the end doesn't fill the period
+
 
 //////////
 //tests for getPeriodComparison

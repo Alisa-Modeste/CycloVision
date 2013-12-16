@@ -404,3 +404,4 @@ test('getAllPeriods - two periods with a gap without ajax - year (far apart)', f
 // NT.changeDates
 // NT.changeInterval
 // NT.sendRequest
+//formatPeriodHeading

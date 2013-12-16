@@ -152,16 +152,6 @@
 		
 	};
 
-	// var periods = [], labels = [], values = [], keys;
-	// var pushValues = function(timestamp, numbers){
-	// 	var period = NT.getPeriodStartEnd( timestamp );
-	// 	//console.log("period",period)
-	// 	var value = numbers[ timestamp ] ? numbers[ timestamp ] : 0;
-	// 	periods.push( [ period[0], period[1], value ] );
-	// 	labels.push( period[0] );
-	// 	values.push( value );
-	// }
-
 	var periods, labels, values;
 
 
@@ -174,14 +164,6 @@
 		//return
 	}
 
-	NT.threePeriodLines = function(time, goalTime, numbers){
-		NT.storePeriod(time, periodGoal, numbers);
-		var nextPeriod = moment(time *1000).add(NT.interval, 1)._d.getTime() /1000;
-		var periodComparison = NT.getPeriodComparison(nextPeriod);
-
-		//array v. hash
-		return [nextPeriod, periodComparison]
-	}
 
 	NT.getAllPeriods = function(numbers){
 		var keys = Object.keys(numbers).sort();
@@ -200,8 +182,8 @@
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 			}
 
-			var periodGoal = keys[i+1];			
-			var nextPeriod = keys[i], periodComparison;
+			periodGoal = keys[i+1];			
+			nextPeriod = keys[i];
 
 			while (nextPeriod == keys[i] || keys[i+1] && periodComparison < periodGoal){
 				NT.storePeriod(nextPeriod, periodGoal, numbers);
@@ -210,18 +192,18 @@
 
 			}
 
-				var periodGoal = NT.ending;
-				var nextPeriod = moment(keys[ keys.length-1 ] *1000).add(NT.interval, 1)._d.getTime() /1000;
-			
-				var j=0;
-				while (i == keys.length-1 && periodComparison < periodGoal || j==0 && nextPeriod < periodGoal){
-					j++
-					
-					NT.storePeriod(nextPeriod, periodGoal, numbers);
-					nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
-					periodComparison = NT.getPeriodComparison(nextPeriod);
+			periodGoal = NT.ending;
+			nextPeriod = moment(keys[ keys.length-1 ] *1000).add(NT.interval, 1)._d.getTime() /1000;
+		
+			var j=0;
+			while (i == keys.length-1 && periodComparison < periodGoal || i == keys.length-1 && j==0 && nextPeriod < periodGoal){
+				j++
 				
-				}
+				NT.storePeriod(nextPeriod, periodGoal, numbers);
+				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
+				periodComparison = NT.getPeriodComparison(nextPeriod);
+			
+			}
 	
 		}
 
@@ -269,18 +251,6 @@
 	};
 
 	NT.renderInfo = function(numbers){
-		// if (!NT.useAjax){
-
-		// 	var numbers = NT.getEmbeddedData();
-		// 	NT.useAjax = true;
-		// 	console.log("Negative agax")
-		// }
-		// else {
-		// 	$("#child-cell").nextAll().remove()
-		// 	console.log("ajax")
-		// }
-
-
 		var periods = NT.getAllPeriods(numbers);
 		var labels = periods['labels'], values = periods['values'];
 		periods = periods['everything'];
@@ -291,9 +261,26 @@
 
 	};
 
+	NT.formatPeriodHeading = function(timestamp){
+		var date = timestamp.toString().split(' ').slice(0,4);
+		date[0] = date[0] + ",";
+		date[2] = date[2] + ",";
+		date.push(timestamp.toLocaleTimeString())
+		date = date.join(" ")
+
+		return date;
+		
+	};
+
 	NT.displayPeriod = function(){
-		var dates = new Date(NT.beginning )
-		//$("#period-title").html(NT.beginning NT.ending)
+		var from = new Date(NT.beginning *1000);
+		var to = new Date(NT.ending *1000);
+
+		from = NT.formatPeriodHeading(from);
+		to = NT.formatPeriodHeading(to);
+
+		$("#period-title").html("<h2>" + from + " to " + to + "</h2>")
+
 	}
 
 	NT.setEndPoints = function(range){
@@ -319,6 +306,7 @@
 		NT.setEndPoints(data['range']);
 
 		NT.renderInfo(data['totals']);
+		NT.displayPeriod();
 	}
 
 

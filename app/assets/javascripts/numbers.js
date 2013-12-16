@@ -190,31 +190,17 @@
 
 		for (var i=0; i< keys.length; i++){
 
-			if (NT.interval == "year"){
-				var periodGoal = moment(keys[0] *1000).year();
-			}
-			else{
-				var periodGoal = keys[0];
-			}
-
-			
+			var periodGoal = keys[0];
 			var nextPeriod = NT.beginning, periodComparison;
 
 			while (i == 0 && NT.beginning < keys[0] && nextPeriod == NT.beginning || i == 0 && periodComparison < periodGoal){
 				
-
 				NT.storePeriod(nextPeriod, periodGoal, numbers);
 				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 			}
 
-			if (NT.interval == "year"){
-				var periodGoal = moment(keys[i+1] *1000).year();
-			}
-			else{
-				var periodGoal = keys[i+1];
-			}
-			
+			var periodGoal = keys[i+1];			
 			var nextPeriod = keys[i], periodComparison;
 
 			while (nextPeriod == keys[i] || keys[i+1] && periodComparison < periodGoal){
@@ -224,21 +210,13 @@
 
 			}
 
-//make year a timestamp too
-				if (NT.interval == "year"){
-					var periodGoal = moment(NT.ending *1000).year();
-				}
-				else{
-					var periodGoal = NT.ending;
-				}
-
+				var periodGoal = NT.ending;
 				var nextPeriod = moment(keys[ keys.length-1 ] *1000).add(NT.interval, 1)._d.getTime() /1000;
 			
 				var j=0;
 				while (i == keys.length-1 && periodComparison < periodGoal || j==0 && nextPeriod < periodGoal){
 					j++
 					
-
 					NT.storePeriod(nextPeriod, periodGoal, numbers);
 					nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 					periodComparison = NT.getPeriodComparison(nextPeriod);
@@ -251,13 +229,7 @@
 	};
 
 	NT.getPeriodComparison = function(nextPeriod){
-		if (NT.interval == "year"){
-			return (moment(nextPeriod*1000).year());
-		} 
-		else {
-			return moment(nextPeriod *1000).endOf(NT.interval)._d.getTime() / 1000;
-		}
-
+		return moment(nextPeriod *1000).endOf(NT.interval)._d.getTime() / 1000;
 	};
 
 	NT.changeDates = function(next){

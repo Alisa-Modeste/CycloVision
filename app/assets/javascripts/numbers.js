@@ -152,35 +152,60 @@
 		
 	};
 
+	// var periods = [], labels = [], values = [], keys;
+	// var pushValues = function(timestamp, numbers){
+	// 	var period = NT.getPeriodStartEnd( timestamp );
+	// 	//console.log("period",period)
+	// 	var value = numbers[ timestamp ] ? numbers[ timestamp ] : 0;
+	// 	periods.push( [ period[0], period[1], value ] );
+	// 	labels.push( period[0] );
+	// 	values.push( value );
+	// }
+
+	var periods = [], labels = [], values = [];
+
+
+	NT.storePeriod = function(time, goalTime, numbers){
+		var period = NT.getPeriodStartEnd( time );
+		var value = numbers[ time ] ? numbers[ time ] : 0;
+		periods.push( [ period[0], period[1], value ] );
+		labels.push( period[0] );
+		values.push( value );
+		//return
+	}
+
 	NT.getAllPeriods = function(numbers){
 		var keys = Object.keys(numbers).sort();
 		
 
-		var periods = [], labels = [], values = [];
 
 		for (var i=0; i< keys.length; i++){
 
 			if (i == 0 && NT.beginning < keys[0]){
 
-			if (NT.interval == "year"){
-				var periodGoal = moment(keys[0] *1000).year();
-			}
-			else{
-				var periodGoal = keys[0];
-			}
+				if (NT.interval == "year"){
+					var periodGoal = moment(keys[0] *1000).year();
+				}
+				else{
+					var periodGoal = keys[0];
+				}
 
-			console.log("nt beginning", NT.beginning, "k[1", keys[i])
-
-			
-			//if (i == 0){
+				// console.log("nt beginning", NT.beginning, "k[1", keys[i])
 
 			
-				console.log("YEP IT'S SMALLER")
-				var period = NT.getPeriodStartEnd( NT.beginning );
-				console.log("period",period)
-				periods.push( [ period[0], period[1], 0 ] );
-				labels.push( period[0] );
-				values.push( 0 );
+			// //if (i == 0){
+
+			
+			// 	console.log("YEP IT'S SMALLER")
+				// var period = NT.getPeriodStartEnd( NT.beginning );
+				// //console.log("period",period)
+				// periods.push( [ period[0], period[1], 0 ] );
+				// labels.push( period[0] );
+				// values.push( 0 );
+
+				NT.storePeriod(NT.beginning, periodGoal, numbers);
+
+				// pushValues(NT.beginning, numbers)
 
 				var nextPeriod = moment(NT.beginning *1000).add(NT.interval, 1)._d.getTime() /1000;
 			var periodComparison = NT.getPeriodComparison(nextPeriod);
@@ -189,22 +214,35 @@
 			while (i == 0 && periodComparison < periodGoal && b<28){
 			//if (nextPeriod < keys[i]){
 				b++
-				var period = NT.getPeriodStartEnd( nextPeriod );
-				periods.push( [ period[0], period[1], 0 ] );
-				labels.push( period[0] );
-				values.push( 0 );
+				
+
+				NT.storePeriod(nextPeriod, periodGoal, numbers);
 
 				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				 periodComparison = NT.getPeriodComparison(nextPeriod);
-				console.log("second period here is ", period,nextPeriod, "periodComparison",periodComparison)
+				//console.log("second period here is ", period,nextPeriod, "periodComparison",periodComparison)
 			}
 
 			}
+			//end of if
 
-			var period = NT.getPeriodStartEnd(keys[i]);
-			periods.push( [ period[0], period[1], numbers[keys[i]] ] );
-			labels.push( period[0] );
-			values.push( numbers[keys[i]] );
+			// var period = NT.getPeriodStartEnd();
+			// periods.push( [ period[0], period[1], numbers[keys[i]] ] );
+			// labels.push( period[0] );
+			// values.push( numbers[keys[i]] );
+
+			console.log("what is periodGoal",periodGoal, "what round", i)
+
+			if (NT.interval == "year"){
+				var periodGoal = moment(keys[i+1] *1000).year();
+			}
+			else{
+				var periodGoal = keys[i+1];
+			}
+
+			console.log("NOW what is periodGoal",periodGoal, "what round", i)
+
+			NT.storePeriod(keys[i], periodGoal, numbers);
 
 			
 			var nextPeriod = moment(keys[i] *1000).add(NT.interval, 1)._d.getTime() /1000;
@@ -220,15 +258,14 @@
 
 			while ( keys[i+1] && ( periodComparison < periodGoal )){
 
-				period = NT.getPeriodStartEnd( nextPeriod );
-				periods.push( [ period[0], period[1], 0 ] );
-				labels.push( period[0] );
-				values.push( 0 );
+				NT.storePeriod(nextPeriod, periodGoal, numbers);
 
 				nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 
-			}		
+			}
+
+			//if (i==keys.length-1)		
 	
 		}
 

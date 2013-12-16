@@ -395,6 +395,8 @@ test('getAllPeriods - two periods with a gap without ajax - year (far apart)', f
 
 });
 
+//getAllPeriods test with NT.beginning
+
 //////////
 //tests for getPeriodComparison
 // NT.placeEndpoints()

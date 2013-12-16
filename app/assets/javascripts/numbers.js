@@ -185,8 +185,6 @@
 
 	NT.getAllPeriods = function(numbers){
 		var keys = Object.keys(numbers).sort();
-		
-
 
 		for (var i=0; i< keys.length; i++){
 
@@ -200,23 +198,13 @@
 			
 			var nextPeriod = NT.beginning, periodComparison;
 
-		//remove b's
-			var b =0;
-			while (i == 0 && NT.beginning < keys[0] && nextPeriod == NT.beginning || i == 0 && periodComparison < periodGoal && b<28){
-			//if (nextPeriod < keys[i]){
-				b++
+			while (i == 0 && NT.beginning < keys[0] && nextPeriod == NT.beginning || i == 0 && periodComparison < periodGoal){
 				
 
 				NT.storePeriod(nextPeriod, periodGoal, numbers);
 				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
-				//console.log("second period here is ", period,nextPeriod, "periodComparison",periodComparison)
-
-				//NT.threePeriodLines()
 			}
-
-
-			console.log("what is periodGoal",periodGoal, "what round", i)
 
 			if (NT.interval == "year"){
 				var periodGoal = moment(keys[i+1] *1000).year();
@@ -227,16 +215,12 @@
 			
 			var nextPeriod = keys[i], periodComparison;
 
-				var b=0
-			while (nextPeriod == keys[i] || keys[i+1] && periodComparison < periodGoal && b<28){
-b++
+			while (nextPeriod == keys[i] || keys[i+1] && periodComparison < periodGoal){
 				NT.storePeriod(nextPeriod, periodGoal, numbers);
 				nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 
 			}
-
-			if (i == keys.length-1 && keys[ keys.length-1 ] < NT.ending){
 
 //make year a timestamp too
 				if (NT.interval == "year"){
@@ -246,25 +230,18 @@ b++
 					var periodGoal = NT.ending;
 				}
 
-				//NT.storePeriod(keys[ keys.length-1 ], periodGoal, numbers);
 				var nextPeriod = moment(keys[ keys.length-1 ] *1000).add(NT.interval, 1)._d.getTime() /1000;
-				//var periodComparison = NT.getPeriodComparison(nextPeriod);
 			
-				var b =0,j=0;
-				while (i == keys.length-1 && periodComparison < periodGoal && b<28 || j==0 && nextPeriod < periodGoal){
-				//if (nextPeriod < keys[i]){
-					b++
+				var j=0;
+				while (i == keys.length-1 && periodComparison < periodGoal || j==0 && nextPeriod < periodGoal){
 					j++
 					
 
 					NT.storePeriod(nextPeriod, periodGoal, numbers);
 					nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 					periodComparison = NT.getPeriodComparison(nextPeriod);
-					//console.log("second period here is ", period,nextPeriod, "periodComparison",periodComparison)
+				
 				}
-
-			}
-			//end of second if
 	
 		}
 

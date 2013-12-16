@@ -8,7 +8,7 @@
 	NT.interval = "day";
 	NT.nextSet = "same"; //or "next" or "previous"
 	NT.useAjax = false;
-	NT.ending, NT.beginning;
+	var periods, labels, values;
 
 	NT.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
@@ -17,11 +17,10 @@
 			yr: date.getFullYear(), day: date.getDate(), month: date.getMonth()};
 
 		if (date.hour > 11){
-			//date.merdian = " PM";
-			date.merdian = {current: " PM", other: " AM"};
+			date.meridiem = {current: " PM", other: " AM"};
 		}
 		else {
-			date.merdian = {current: " AM", other: " PM"};
+			date.meridiem = {current: " AM", other: " PM"};
 		}
 
 		date.hour = date.hour % 12;
@@ -36,51 +35,48 @@
 
 		switch(NT.interval){
 			case "minute":
-			//hour:min A/P - hour:min+1 A/P
-				periodStart = date.hour + ":" + date.min + date.merdian.current;
+				periodStart = date.hour + ":" + date.min + date.meridiem.current;
 
 				if (date.min == 59){
 					if (date.hour == 12){
-						periodEnd = "1:00" + date.merdian.current;
+						periodEnd = "1:00" + date.meridiem.current;
 					}
 					else if (date.hour == 11){
-						periodEnd = date.hour+1 + ":00" + date.merdian.other;	
+						periodEnd = date.hour+1 + ":00" + date.meridiem.other;	
 					}
 					else {
-						periodEnd = date.hour+1 + ":00" + date.merdian.current;
+						periodEnd = date.hour+1 + ":00" + date.meridiem.current;
 					}
 				}
 				else if(date.min < 10){
-					periodEnd = date.hour + ":0" + (date.min+1) + date.merdian.current;
-					periodStart = date.hour + ":0" + date.min + date.merdian.current;
+					periodEnd = date.hour + ":0" + (date.min+1) + date.meridiem.current;
+					periodStart = date.hour + ":0" + date.min + date.meridiem.current;
 				}
 				else {
-					periodEnd = date.hour + ":" + (date.min+1) + date.merdian.current;
+					periodEnd = date.hour + ":" + (date.min+1) + date.meridiem.current;
 				}
 				
 				break;
 
 
 			case "hour":
-			//HH:00 - HH+1:00
 			
-				periodStart = date.hour + ":00" + date.merdian.current;
+				periodStart = date.hour + ":00" + date.meridiem.current;
 
 				if (date.hour == 11){
-					periodEnd = "12:00" + date.merdian.other;
+					periodEnd = "12:00" + date.meridiem.other;
 				}
 				else if (date.hour == 12){
-					periodEnd = "1:00" + date.merdian.current;
+					periodEnd = "1:00" + date.meridiem.current;
 				}
 				else {
-					periodEnd = date.hour+1 + ":00" + date.merdian.current;
+					periodEnd = date.hour+1 + ":00" + date.meridiem.current;
 				}
 
 				break;
 				
 
 			case "day":
-			//Month Day - Month Day+1
 				periodEnd = moment(date.year +"-"+ (date.month+1) +"-"+
 		 			date.day).add('days', 1)._d;
 				periodStart = months[ date.month ] + " " + date.day;
@@ -90,7 +86,6 @@
 				break;
 
 			case "month":
-			//Month - Month+1
 				periodStart = months[date.month]
 
 				if (date.month == 11){
@@ -103,7 +98,6 @@
 
 
 			case "year":
-			//Year - Year +1
 
 				periodStart = date.yr;
 				periodEnd = date.yr +1;
@@ -152,10 +146,8 @@
 		
 	};
 
-	var periods, labels, values;
 
-
-	NT.storePeriod = function(time, goalTime, numbers){
+	NT.storePeriod = function(time, numbers){
 		var period = NT.getPeriodStartEnd( time );
 		var value = numbers[ time ] ? numbers[ time ] : 0;
 		periods.push( [ period[0], period[1], value ] );
@@ -178,13 +170,13 @@
 			var nextPeriod = NT.beginning, periodComparison;
 
 			while (nextPeriod == NT.beginning || periodComparison < periodGoal){
-				NT.storePeriod(nextPeriod, periodGoal, {});
+				NT.storePeriod(nextPeriod, {});
 				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 
 			}
-//remove goal
-			NT.storePeriod(periodGoal, periodGoal, {});
+
+			NT.storePeriod(periodGoal, {});
 			return {everything: periods, labels: labels, values: values};
 		}
 
@@ -197,7 +189,7 @@
 
 			while (i == 0 && NT.beginning < keys[0] && nextPeriod == NT.beginning || i == 0 && periodComparison < periodGoal){
 				
-				NT.storePeriod(nextPeriod, periodGoal, numbers);
+				NT.storePeriod(nextPeriod, numbers);
 				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 			}
@@ -206,7 +198,7 @@
 			nextPeriod = keys[i];
 
 			while (nextPeriod == keys[i] || keys[i+1] && periodComparison < periodGoal){
-				NT.storePeriod(nextPeriod, periodGoal, numbers);
+				NT.storePeriod(nextPeriod, numbers);
 				nextPeriod = moment( nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 
@@ -219,7 +211,7 @@
 			while (i == keys.length-1 && periodComparison < periodGoal || i == keys.length-1 && j==0 && nextPeriod < periodGoal){
 				j++
 				
-				NT.storePeriod(nextPeriod, periodGoal, numbers);
+				NT.storePeriod(nextPeriod, numbers);
 				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
 				periodComparison = NT.getPeriodComparison(nextPeriod);
 			
@@ -255,9 +247,7 @@
 					nextSet: nextSet,
 					startDate: NT.beginning,
 					endDate: NT.ending,
-					//timezoneOffset: NT.ending.getTimezoneOffset(),
-					interval: NT.interval//,
-					//offset: NT.offset
+					interval: NT.interval
 				}
 			},
 			error: function(){

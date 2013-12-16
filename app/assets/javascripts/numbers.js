@@ -281,6 +281,9 @@
 
 		$("#period-title").html("<h2>" + from + " to " + to + "</h2>")
 
+		$("#previous").html("View Previous " + NT.interval + "s");
+		$("#next").html("View Next " + NT.interval + "s");
+
 	}
 
 	NT.setEndPoints = function(range){

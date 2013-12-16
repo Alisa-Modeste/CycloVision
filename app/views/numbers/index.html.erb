@@ -2,17 +2,38 @@
 <p>Training to beat the world record of 61 jumping jacks in one minute.</p>
 
 <a href="#">Home</a> <a href="#">Blog</a> <a href="#">About Me</a>
-<select box></select>
-
-<div id='previous'>
-	<button id="<%#= @numbers.first.created_at.to_i %>"><</button>
-</div>
-
-<div id='next'>
-	<button id="<%#= @numbers.last.created_at.to_i %>">></button>
-</div>
 
 <h2 id='period-title'></h2>
+
+
+
+<div id='previous' style="float:left; width:30%">
+
+</div>
+<!-- <div style="margin: 0 auto; width:300px; float:left; padding:0"> -->
+<!-- <div style="text-align: center;position:relative;left:-50%;float:right;"> -->
+<div style="text-align: center;">
+
+<p style="margin: 0 auto; width:300px; float:left; padding:0; display: block;">View by:
+<!-- <p style="margin: 0 auto; width:300px; float:left; padding:0; display: block; position:relative;left:50%;">View by: -->
+<!-- <p style="padding:0; margin: 0 auto; display: block">View by: -->
+ <select>
+ 	<option></option>
+ 	<option>Minute</option>
+ 	<option>Hour</option>
+ 	<option>Day</option>
+ 	<option>Month</option>
+ 	<option>Year</option>
+</select></p>
+
+</div>
+
+<!-- <div id='next' style="float:right; width:300px; text-align: right; padding-right:50px;"> -->
+<div id='next' style="float:right; width:300px; ">
+
+</div>
+
+
 
 <canvas id="myChart" width="1200" height="400"></canvas>
 

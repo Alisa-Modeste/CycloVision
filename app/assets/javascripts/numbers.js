@@ -329,6 +329,14 @@
 			NT.changeInterval(selected);
 
 		});
+
+		$("#previous").click(function(){
+			NT.changeDates("previous");
+		});
+
+		$("#next").click(function(){
+			NT.changeDates("next");
+		});
 	}
 
 

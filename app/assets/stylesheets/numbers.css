@@ -1,0 +1,28 @@
+#previous {
+	float:left; 
+	width:30%; 
+	padding-left:30px;
+}
+
+#selector-container-parent{
+	margin: 0 auto; 
+	width:300px; 
+	float:left; 
+	padding:0;
+}
+
+#selector-container{
+	 margin: 0 auto; 
+	 width:300px; 
+	 float:left; 
+	 padding:0; 
+	 display: block; 
+	 position:relative;
+	 left:30%;"
+}
+
+#next{
+	float:right; 
+	width:300px; 
+	text-align: center
+}

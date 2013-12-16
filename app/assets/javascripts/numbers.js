@@ -317,7 +317,11 @@
 			console.log("This is the data from handler", data)
 			console.log("This is the this", $(this))
 
-			console.log($( "#selector-container select option:selected" ).text())
+			var selected = $( "#selector-container select option:selected" ).text()
+			console.log(selected, typeof(selected))
+
+			NT.changeInterval(selected);
+
 		});
 	}
 

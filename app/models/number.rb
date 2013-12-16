@@ -60,7 +60,8 @@ class Number < ActiveRecord::Base
 		totals_with_timestamp[ time ] = value
 	end
 
-	totals.empty? ? { from.to_i => 0, to.to_i => 0 } : totals_with_timestamp
+	#totals.empty? ? { from.to_i => 0, to.to_i => 0 } : totals_with_timestamp
+	{totals: totals_with_timestamp, range: {from: from.to_i, to: to.to_i} }
 
   end
 

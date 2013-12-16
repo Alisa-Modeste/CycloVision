@@ -9,7 +9,6 @@
 	NT.nextSet = "same"; //or "next" or "previous"
 	NT.useAjax = false;
 	NT.ending, NT.beginning;
-	var initialized = false;
 
 	NT.getPeriodStartEnd = function(timestamp){
 		var date = new Date(timestamp * 1000);
@@ -126,7 +125,6 @@
 	};
 
 	NT.createChart = function(labels, values){
-		console.log("In charts")
 		var data = {
 			labels : labels,
 			datasets : [
@@ -138,26 +136,11 @@
 			]
 		};
 
-		// var mychart = new AwesomeChart('myChart');
-  //       mychart.title = "Jumping Jack Records";
-  //       mychart.data = values
-  //       mychart.labels = labels
-  //       mychart.draw();
-		
-
-	// 	if (!initialized){
-			var ctx = $("#myChart").get(0).getContext("2d");
+		var ctx = $("#myChart").get(0).getContext("2d");
 		var myNewChart = new Chart(ctx)
-		//NT.myNewChart = new Chart(ctx)
+
 		myNewChart.Bar(data);
-	// 	initialized = true;
-	// }
-	// else{
-	// 	console.log("Ir'd false")
-		
-	// 	//ctx.clearRect(0, 0, 1200, 400)
-	// 	NT.myNewChart.Bar(data);
-	// }
+
 
 	};
 
@@ -169,14 +152,9 @@
 		
 	};
 
-	NT.placeEndpoints = function(){
-		console.log("I need to be written!!!!!!!!!!!!!!!!!! - NT.placeEndpoints()")
-
-	}
-
 	NT.getAllPeriods = function(numbers){
 		var keys = Object.keys(numbers).sort();
-		NT.beginning = keys[0], NT.ending = keys[ keys.length-1 ];
+		
 
 		var periods = [], labels = [], values = [];
 
@@ -228,17 +206,18 @@
 	};
 
 	NT.changeDates = function(next){
-		NT.sendRequest(next, NT.renderInfo)
+		NT.sendRequest(next, NT.updateInfo)
 	};
 
 	NT.changeInterval = function(newInterval){
 		NT.interval = newInterval
 
-		NT.sendRequest("same", NT.renderInfo)
+		NT.sendRequest("same", NT.updateInfo)
 		
 	};
 
 	NT.sendRequest = function(nextSet, callback){
+		console.log("aren't we set",NT.ending, NT.beginning)
 		$.ajax({
 			url: "/numbers",
 			dataType: "json",
@@ -263,9 +242,38 @@
 	};
 
 	NT.renderInfo = function(numbers){
+		// if (!NT.useAjax){
+
+		// 	var numbers = NT.getEmbeddedData();
+		// 	NT.useAjax = true;
+		// 	console.log("Negative agax")
+		// }
+		// else {
+		// 	$("#child-cell").nextAll().remove()
+		// 	console.log("ajax")
+		// }
+
+
+		var periods = NT.getAllPeriods(numbers);
+		var labels = periods['labels'], values = periods['values'];
+		periods = periods['everything'];
+
+		NT.createChart(labels, values);
+		NT.populateTable(periods);
+
+	};
+
+	NT.setEndPoints = function(range){
+		console.log("This is what we got", range)
+
+		NT.beginning = range['from'], NT.ending = range['to'];
+	};
+
+	NT.updateInfo = function(data){
 		if (!NT.useAjax){
 
-			var numbers = NT.getEmbeddedData();
+			var data = NT.getEmbeddedData();
+			console.log(data)
 			NT.useAjax = true;
 			console.log("Negative agax")
 		}
@@ -274,18 +282,11 @@
 			console.log("ajax")
 		}
 
+		console.log("The data", data)
+		NT.setEndPoints(data['range']);
 
-		var periods = NT.getAllPeriods(numbers);
-		console.log("these are the periods", periods)
-		var labels = periods['labels'], values = periods['values'];
-		periods = periods['everything'];
-
-		NT.createChart(labels, values)
-		NT.populateTable(periods)
-		NT.placeEndpoints()
-
-	};
-
+		NT.renderInfo(data['totals']);
+	}
 
 
 })(window);
@@ -294,5 +295,5 @@ $(document).ready(function(){
 	if (location.href.indexOf("localhost:3000/qunit") != -1){
 		return
 	}
-	NT.renderInfo()
+	NT.updateInfo()
 });

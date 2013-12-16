@@ -27,10 +27,8 @@ describe Number do
 		data = {
   			interval: 'day',#NOTE: default to day
   			nextSet: "same", #find those preceeding today's time
-  			includeSelf: true, #find those with today's time
-  			endDate: time,
-  			timezoneOffset: 0,
-  			offset: 0
+  			endDate: time
+
   		}
 
 		records = Number.period_record(data)

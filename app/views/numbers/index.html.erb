@@ -34,9 +34,9 @@
 </script>
 
 <script type="application/json" id="beginning">
-	<%# Get date minus (six) %>
+	<%= @numbers['from'].to_json.html_safe %>
 </script>
 
 <script type="application/json" id="ending">
-	<%# Get date %>
+	<%= @numbers['to'].to_json.html_safe %>
 </script>

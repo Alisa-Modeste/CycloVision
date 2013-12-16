@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require moment.min
-//= require awesomechart
 //= require Chart.min
 //= require sinon
 //= require_tree .

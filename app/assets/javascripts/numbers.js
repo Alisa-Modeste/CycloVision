@@ -312,6 +312,15 @@
 		NT.displayPeriod();
 	}
 
+	NT.setupEventHandlers = function(){
+		$("#selector-container select").change(function(data){
+			console.log("This is the data from handler", data)
+			console.log("This is the this", $(this))
+
+			console.log($( "#selector-container select option:selected" ).text())
+		});
+	}
+
 
 })(window);
 
@@ -320,4 +329,5 @@ $(document).ready(function(){
 		return
 	}
 	NT.updateInfo()
+	NT.setupEventHandlers();
 });

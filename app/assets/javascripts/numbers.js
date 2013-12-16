@@ -162,7 +162,7 @@
 	// 	values.push( value );
 	// }
 
-	var periods = [], labels = [], values = [];
+	var periods, labels, values;
 
 
 	NT.storePeriod = function(time, goalTime, numbers){
@@ -185,6 +185,8 @@
 
 	NT.getAllPeriods = function(numbers){
 		var keys = Object.keys(numbers).sort();
+
+		periods = [], labels = [], values = [];
 
 		for (var i=0; i< keys.length; i++){
 

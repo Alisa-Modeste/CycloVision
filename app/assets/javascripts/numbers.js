@@ -160,6 +160,47 @@
 
 		for (var i=0; i< keys.length; i++){
 
+			if (i == 0 && NT.beginning < keys[0]){
+
+			if (NT.interval == "year"){
+				var periodGoal = moment(keys[0] *1000).year();
+			}
+			else{
+				var periodGoal = keys[0];
+			}
+
+			console.log("nt beginning", NT.beginning, "k[1", keys[i])
+
+			
+			//if (i == 0){
+
+			
+				console.log("YEP IT'S SMALLER")
+				var period = NT.getPeriodStartEnd( NT.beginning );
+				console.log("period",period)
+				periods.push( [ period[0], period[1], 0 ] );
+				labels.push( period[0] );
+				values.push( 0 );
+
+				var nextPeriod = moment(NT.beginning *1000).add(NT.interval, 1)._d.getTime() /1000;
+			var periodComparison = NT.getPeriodComparison(nextPeriod);
+			
+			var b =0;
+			while (i == 0 && periodComparison < periodGoal && b<28){
+			//if (nextPeriod < keys[i]){
+				b++
+				var period = NT.getPeriodStartEnd( nextPeriod );
+				periods.push( [ period[0], period[1], 0 ] );
+				labels.push( period[0] );
+				values.push( 0 );
+
+				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
+				 periodComparison = NT.getPeriodComparison(nextPeriod);
+				console.log("second period here is ", period,nextPeriod, "periodComparison",periodComparison)
+			}
+
+			}
+
 			var period = NT.getPeriodStartEnd(keys[i]);
 			periods.push( [ period[0], period[1], numbers[keys[i]] ] );
 			labels.push( period[0] );
@@ -174,8 +215,7 @@
 			else{
 				var periodGoal = keys[i+1];
 			}
-
-
+			
 			var periodComparison = NT.getPeriodComparison(nextPeriod);
 
 			while ( keys[i+1] && ( periodComparison < periodGoal )){
@@ -258,10 +298,16 @@
 		var labels = periods['labels'], values = periods['values'];
 		periods = periods['everything'];
 
+		NT.displayPeriod();
 		NT.createChart(labels, values);
 		NT.populateTable(periods);
 
 	};
+
+	NT.displayPeriod = function(){
+		var dates = new Date(NT.beginning )
+		//$("#period-title").html(NT.beginning NT.ending)
+	}
 
 	NT.setEndPoints = function(range){
 		console.log("This is what we got", range)

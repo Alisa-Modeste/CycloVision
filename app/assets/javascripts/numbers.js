@@ -154,10 +154,6 @@
 		labels.push( period[0] );
 		values.push( value );
 
-		if ( $.isEmptyObject(numbers) ){
-			console.log(period, "there's period", value)
-		}
-
 	}
 
 
@@ -238,7 +234,6 @@
 	};
 
 	NT.sendRequest = function(nextSet, callback, newBeginning){
-		console.log("aren't we set",NT.ending, NT.beginning)
 		var ending = newBeginning ? newBeginning : NT.ending;
 		$.ajax({
 			url: "/numbers",
@@ -298,8 +293,6 @@
 	}
 
 	NT.setEndPoints = function(range){
-		console.log("This is what we got", range)
-
 		NT.beginning = range['from'], NT.ending = range['to'];
 	};
 
@@ -307,16 +300,12 @@
 		if (!NT.useAjax){
 
 			var data = NT.getEmbeddedData();
-			console.log(data)
 			NT.useAjax = true;
-			console.log("Negative agax")
 		}
 		else {
-			$("#child-cell").nextAll().remove()
-			console.log("ajax")
+			$("#child-cell").nextAll().remove();
 		}
 
-		console.log("The data", data)
 		NT.setEndPoints(data['range']);
 
 		NT.renderInfo(data['totals']);
@@ -343,12 +332,9 @@
 			e.preventDefault();
 			var date = $("form input").val().split("/")
 			date[2] = parseInt(date[2])
-			console.log("yep, clicked",date)
-
-			//console.log(date[0] > 0, date[0] < 12, date[1] > 0, date[1] < 32, date[2] > 1969, !isNaN(date[2]) == "number")
+			
 			if(date[0] > 0 && date[0] < 13 && date[1] > 0 && date[1] < 32 && date[2] > 1969 && !isNaN(date[2])){
 				date = moment(date[2] + "-" + date[0] + "-" + date[1])._d.getTime() /1000;
-				console.log(date)
 				NT.changeDates("next", date);
 			}
 			else {

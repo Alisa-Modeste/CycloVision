@@ -5,12 +5,9 @@ class Number < ActiveRecord::Base
 
   	unless data
   		data = {
-  			interval: 'day',#NOTE: default to day
-  			nextSet: "same", #find those preceeding today's time
-  			#includeSelf: true, #find those with today's time
-  			endDate: Time.now #,
-  			# timezoneOffset: 0,
-  			# offset: 0
+  			interval: 'day',#NOTE: javascript also defaults to day
+  			nextSet: "same",
+  			endDate: Time.now 
   		}
   	end
   	p "data is", data

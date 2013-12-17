@@ -226,8 +226,8 @@
 		return moment(nextPeriod *1000).endOf(NT.interval)._d.getTime() / 1000;
 	};
 
-	NT.changeDates = function(next){
-		NT.sendRequest(next, NT.updateInfo)
+	NT.changeDates = function(next, newBeginning){
+		NT.sendRequest(next, NT.updateInfo, newBeginning)
 	};
 
 	NT.changeInterval = function(newInterval){
@@ -237,8 +237,9 @@
 		
 	};
 
-	NT.sendRequest = function(nextSet, callback){
+	NT.sendRequest = function(nextSet, callback, newBeginning){
 		console.log("aren't we set",NT.ending, NT.beginning)
+		var ending = newBeginning ? newBeginning : NT.ending;
 		$.ajax({
 			url: "/numbers",
 			dataType: "json",
@@ -246,7 +247,7 @@
 				request: {
 					nextSet: nextSet,
 					startDate: NT.beginning,
-					endDate: NT.ending,
+					endDate: ending,
 					interval: NT.interval
 				}
 			},
@@ -337,6 +338,23 @@
 		$("#next").click(function(){
 			NT.changeDates("next");
 		});
+
+		$("form").submit(function(e){
+			e.preventDefault();
+			var date = $("form input").val().split("/")
+			date[2] = parseInt(date[2])
+			console.log("yep, clicked",date)
+
+			//console.log(date[0] > 0, date[0] < 12, date[1] > 0, date[1] < 32, date[2] > 1969, !isNaN(date[2]) == "number")
+			if(date[0] > 0 && date[0] < 13 && date[1] > 0 && date[1] < 32 && date[2] > 1969 && !isNaN(date[2])){
+				date = moment(date[2] + "-" + date[0] + "-" + date[1])._d.getTime() /1000;
+				console.log(date)
+				NT.changeDates("next", date);
+			}
+			else {
+				console.log("Invalid number")
+			}
+		})
 	}
 
 

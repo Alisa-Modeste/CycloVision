@@ -1,5 +1,5 @@
 RandomNum::Application.routes.draw do
-  resources :numbers
+  resources :numbers, only: :index
   root :to => "numbers#index"
 
   # The priority is based upon order of creation:

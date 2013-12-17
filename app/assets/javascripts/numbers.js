@@ -353,8 +353,22 @@
 			}
 			else {
 				console.log("Invalid number")
+				$("form span").css( "display", "inline" ).fadeIn( 1000 )
 			}
-		})
+		});
+
+
+		$("form input").focus(function(){
+			$("form span").css( "display", "none" ).fadeOut( 1000 )
+			$(this).val("");
+		});
+
+		$("form input").blur(function(){
+			if ( $(this).val() == "" ){
+				$(this).val("MM/DD/YYYY");
+			}
+		});
+		
 	}
 
 

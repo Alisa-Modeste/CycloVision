@@ -36,3 +36,7 @@
 	text-decoration: underline;
 	cursor:pointer;
 }
+
+form span {
+	display: none;
+}

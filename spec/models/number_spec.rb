@@ -25,7 +25,7 @@ describe Number do
 		time = Time.at(1387152378).utc
 
 		data = {
-  			interval: 'day',#NOTE: default to day
+  			interval: 'day',
   			nextSet: "same", #find those preceeding today's time
   			endDate: time
 

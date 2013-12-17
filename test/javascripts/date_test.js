@@ -65,7 +65,6 @@ test('getPeriodStartEnd - The current and next day', function() {
 
 test('getAllPeriods - two neighborly periods without ajax - day', function() {
   NT.interval = "day"
-  NT.useAjax = false;
 
   var numbers = {1386903537: 2447, 1386953890: 138};
 
@@ -83,8 +82,7 @@ test('getAllPeriods - two neighborly periods without ajax - day', function() {
 });
 
 test('getAllPeriods - two neighborly periods without ajax - min', function() {
-  NT.interval = "minute"
-  NT.useAjax = false;
+  NT.interval = "minute";
 
   var numbers = {1386953890: 2447, 1386953950: 138};
 
@@ -102,8 +100,7 @@ test('getAllPeriods - two neighborly periods without ajax - min', function() {
 });
 
 test('getAllPeriods - two neighborly periods without ajax - hour', function() {
-  NT.interval = "hour"
-  NT.useAjax = false;
+  NT.interval = "hour";
 
   var numbers = {1387043439: 2447, 1387047039: 138};
 
@@ -121,8 +118,7 @@ test('getAllPeriods - two neighborly periods without ajax - hour', function() {
 });
 
 test('getAllPeriods - two neighborly periods without ajax - month', function() {
-  NT.interval = "month"
-  NT.useAjax = false;
+  NT.interval = "month";
 
   var numbers = {1387047039: 2447, 1389725439: 138};
 
@@ -140,8 +136,7 @@ test('getAllPeriods - two neighborly periods without ajax - month', function() {
 });
 
 test('getAllPeriods - two neighborly periods without ajax - year', function() {
-  NT.interval = "year"
-  NT.useAjax = false;
+  NT.interval = "year";
 
   var numbers = {1387047039: 2447, 1389725439: 138};
 
@@ -164,8 +159,7 @@ test('getAllPeriods - two neighborly periods without ajax - year', function() {
 // //Fill in the missing periods//////////
 
 test('getAllPeriods - two periods with a gap without ajax - day (far apart)', function() {
-  NT.interval = "day"
-  NT.useAjax = false;
+  NT.interval = "day";
 
   var numbers = {1386910800: 2447, 1387169999: 138};
   //12/13/2013 6:50:39 PM GMT-5
@@ -187,8 +181,7 @@ test('getAllPeriods - two periods with a gap without ajax - day (far apart)', fu
 });
 
 test('getAllPeriods - two periods with a gap without ajax - day (close together)', function() {
-  NT.interval = "day"
-  NT.useAjax = false;
+  NT.interval = "day";
 
   var numbers = {1386997199: 2447, 1387083600: 138};
   //12/13/2013 6:50:39 PM GMT-5
@@ -210,8 +203,7 @@ test('getAllPeriods - two periods with a gap without ajax - day (close together)
 });
 
 test('getAllPeriods - two periods with a gap without ajax - min (far apart)', function() {
-  NT.interval = "minute"
-  NT.useAjax = false;
+  NT.interval = "minute";
 
   var numbers = {1386953880: 2447, 1386954059: 138};
 
@@ -231,8 +223,7 @@ test('getAllPeriods - two periods with a gap without ajax - min (far apart)', fu
 });
 
 test('getAllPeriods - two periods with a gap without ajax - min (close together)', function() {
-  NT.interval = "minute"
-  NT.useAjax = false;
+  NT.interval = "minute";
 
   var numbers = {1386953939: 2447, 1386954000: 138};
 
@@ -252,8 +243,7 @@ test('getAllPeriods - two periods with a gap without ajax - min (close together)
 });
 
 test('getAllPeriods - two periods with a gap without ajax - hour (far apart)', function() {
-  NT.interval = "hour"
-  NT.useAjax = false;
+  NT.interval = "hour";
 
   var numbers = {1386950400: 2447, 1386961199: 138};
 
@@ -273,8 +263,7 @@ test('getAllPeriods - two periods with a gap without ajax - hour (far apart)', f
 });
 
 test('getAllPeriods - two periods with a gap without ajax - hour (close together)', function() {
-  NT.interval = "hour"
-  NT.useAjax = false;
+  NT.interval = "hour";
 
   var numbers = {1386953999: 2447, 1386957600: 138};
 
@@ -295,8 +284,7 @@ test('getAllPeriods - two periods with a gap without ajax - hour (close together
 
 
 test('getAllPeriods - two periods with a gap without ajax - month (far apart)', function() {
-  NT.interval = "month"
-  NT.useAjax = false;
+  NT.interval = "month";
 
   var numbers = {1380600000: 2447, 1388512799: 138}
 
@@ -315,8 +303,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (far apart)', 
 });
 
 test('getAllPeriods - two periods with a gap without ajax - month (far apart) in different years', function() {
-  NT.interval = "month"
-  NT.useAjax = false;
+  NT.interval = "month";
 
   var numbers = {1383278400: 2447, 1391191199: 138}
 
@@ -335,8 +322,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (far apart) in
 });
 
 test('getAllPeriods - two periods with a gap without ajax - month (close together) in different years', function() {
-  NT.interval = "month"
-  NT.useAjax = false;
+  NT.interval = "month";
 
   var numbers = {1385834399: 2447, 1388552400: 138}
 
@@ -356,8 +342,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (close togethe
 
 
 test('getAllPeriods - two periods with a gap without ajax - year (close together)', function() {
-  NT.interval = "year"
-  NT.useAjax = false;
+  NT.interval = "year";
 
   var numbers = {1388512799: 2447, 1420088400: 138}
 
@@ -376,8 +361,7 @@ test('getAllPeriods - two periods with a gap without ajax - year (close together
 });
 
 test('getAllPeriods - two periods with a gap without ajax - year (far apart)', function() {
-  NT.interval = "year"
-  NT.useAjax = false;
+  NT.interval = "year";
 
   var numbers = {1357016400: 2447, 1451584799: 138}
 
@@ -397,8 +381,7 @@ test('getAllPeriods - two periods with a gap without ajax - year (far apart)', f
 
 //getAllPeriods - test for completely empty period
 test('getAllPeriods - get period when there is no data for the range - year', function() {
-  NT.interval = "year"
-  NT.useAjax = false;
+  NT.interval = "year";
 
   var numbers = {}
   NT.beginning = 1387219350;
@@ -422,7 +405,7 @@ test('getAllPeriods - get period when there is no data for the range - year', fu
 
 // test('getAllPeriods - get period when there is no data for the range - year', function() {
 //   NT.interval = "year"
-//   NT.useAjax = false;
+// 
 
 //   var numbers = {}
 //   NT.beginning = 1387219350;
@@ -446,7 +429,7 @@ test('getAllPeriods - get period when there is no data for the range - year', fu
 
 // test('getAllPeriods - get period when there is no data for the range - year', function() {
 //   NT.interval = "year"
-//   NT.useAjax = false;
+// 
 
 //   var numbers = {}
 //   NT.beginning = 1387219350;
@@ -470,7 +453,7 @@ test('getAllPeriods - get period when there is no data for the range - year', fu
 
 // test('getAllPeriods - get period when there is no data for the range - year', function() {
 //   NT.interval = "year"
-//   NT.useAjax = false;
+// 
 
 //   var numbers = {}
 //   NT.beginning = 1387219350;
@@ -494,7 +477,7 @@ test('getAllPeriods - get period when there is no data for the range - year', fu
 
 // test('getAllPeriods - get period when there is no data for the range - month', function() {
 //   NT.interval = "year"
-//   NT.useAjax = false;
+// 
 
 //   var numbers = {}
 //   NT.beginning = 1387219350;

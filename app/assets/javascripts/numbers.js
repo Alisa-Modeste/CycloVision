@@ -11,6 +11,7 @@
 	var periods, labels, values;
 
 	NT.getPeriodStartEnd = function(timestamp){
+		var periodStart = timestamp * 1000, periodEnd;
 		var date = new Date(timestamp * 1000);
 
 		date = {hour: date.getHours(), min: date.getMinutes(), sec: date.getSeconds(),
@@ -27,8 +28,6 @@
 		if (date.hour == 0){
 			date.hour = 12;
 		}
-
-		var periodEnd, periodStart;
 
 		var months = {0: "January", 1: "February", 2:"March", 3: "April", 4: "May",
 				5: "June", 6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December"}
@@ -77,8 +76,7 @@
 				
 
 			case "day":
-				periodEnd = moment(date.year +"-"+ (date.month+1) +"-"+
-		 			date.day).add('days', 1)._d;
+				periodEnd = moment(periodStart).add('days', 1)._d;
 				periodStart = months[ date.month ] + " " + date.day;
 
 				periodEnd = months[ periodEnd.getMonth() ] + " " + periodEnd.getDate();

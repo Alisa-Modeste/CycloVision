@@ -10,6 +10,7 @@
 	NT.useAjax = false;
 	var periods, labels, values;
 
+	//get the period this date/time is in and the next one
 	NT.getPeriodStartEnd = function(timestamp){
 		var periodStart = timestamp * 1000, periodEnd;
 		var date = new Date(timestamp * 1000);
@@ -144,7 +145,7 @@
 		
 	};
 
-
+	//dries up the pushing into periods, labels, and values from getAllPeriods
 	NT.storePeriod = function(time, numbers){
 		var period = NT.getPeriodStartEnd( time );
 		var value = numbers[ time ] ? numbers[ time ] : 0;
@@ -216,8 +217,9 @@
 		return {everything: periods, labels: labels, values: values};
 	};
 
-	NT.getPeriodComparison = function(nextPeriod){
-		return moment(nextPeriod *1000).endOf(NT.interval)._d.getTime() / 1000;
+	//gets the last possible moment of a particular period
+	NT.getPeriodComparison = function(period){
+		return moment(period *1000).endOf(NT.interval)._d.getTime() / 1000;
 	};
 
 	NT.changeDates = function(next, newBeginning){
@@ -265,6 +267,7 @@
 
 	};
 
+	//formats the date from the heading
 	NT.formatPeriodHeading = function(timestamp){
 		var date = timestamp.toString().split(' ').slice(0,4);
 		date[0] = date[0] + ",";

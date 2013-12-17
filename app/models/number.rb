@@ -10,7 +10,6 @@ class Number < ActiveRecord::Base
   			endDate: Time.now 
   		}
   	end
-  	p "data is", data
 
 	totals_with_timestamp = {}
 
@@ -38,7 +37,6 @@ class Number < ActiveRecord::Base
 		return false
 	end
 
-	p "I passed the return"
 
 	totals = Number.where('created_at >= :from and created_at <= :to',
 		 :from  => from,
@@ -57,7 +55,6 @@ class Number < ActiveRecord::Base
 		totals_with_timestamp[ time ] = value
 	end
 
-	#totals.empty? ? { from.to_i => 0, to.to_i => 0 } : totals_with_timestamp
 	{totals: totals_with_timestamp, range: {from: from.to_i, to: to.to_i} }
 
   end

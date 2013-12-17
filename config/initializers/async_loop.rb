@@ -4,10 +4,8 @@ def addNumber
 		num = Random.new
 		Number.create({ number: num.rand(0..99)})
 
-		sleep 18000
+		sleep 10800
 	end
 end
 
-#t = Thread.new{ addNumber() }
 Thread.new{ addNumber() }
-#t.join

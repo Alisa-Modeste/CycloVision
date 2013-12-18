@@ -59,6 +59,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     multi_json (1.8.2)
+    newrelic_rpm (3.6.8.164)
     pg (0.17.0-x86-mingw32)
     polyglot (0.3.3)
     qunit-rails (0.0.4)
@@ -136,6 +137,7 @@ DEPENDENCIES
   binding_of_caller
   coffee-rails (~> 3.2.1)
   jquery-rails
+  newrelic_rpm
   pg
   qunit-rails
   rails (= 3.2.13)

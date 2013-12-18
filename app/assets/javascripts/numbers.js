@@ -175,7 +175,13 @@
 			return {everything: periods, labels: labels, values: values};
 		}
 
-		var keys = Object.keys(numbers).sort();
+		//IE doesn't recognize Object.keys()
+		var keys = [];
+		for (var prop in numbers){
+			keys.push(prop);
+		}
+
+		keys.sort()
 
 		for (var i=0; i< keys.length; i++){
 

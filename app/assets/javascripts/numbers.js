@@ -148,10 +148,18 @@
 	//dries up the pushing into periods, labels, and values from getAllPeriods
 	NT.storePeriod = function(time, numbers){
 		var period = NT.getPeriodStartEnd( time );
-		var value = numbers[ time ] ? numbers[ time ] : 0;
-		periods.push( [ period[0], period[1], value ] );
+
+		if (numbers[ time ]){
+			var tableValue = numbers[ time ];
+			var chartValue = numbers[ time ];
+		}
+		else {
+			var tableValue = "N/A";
+			var chartValue = 0;
+		}
+		periods.push( [ period[0], period[1], tableValue ] );
 		labels.push( period[0] );
-		values.push( value );
+		values.push( chartValue );
 
 	}
 

@@ -169,7 +169,7 @@ test('getAllPeriods - two periods with a gap without ajax - day (far apart)', fu
 
     var expectation = {
       "everything": [["December 13", "December 14", 2447],
-      ["December 14", "December 15", 0],
+      ["December 14", "December 15", "N/A"],
       ["December 15", "December 16", 138]],
       "labels": ["December 13", "December 14", "December 15"],
       "values": [2447, 0, 138]
@@ -191,7 +191,7 @@ test('getAllPeriods - two periods with a gap without ajax - day (close together)
 
     var expectation = {
       "everything": [["December 13", "December 14", 2447],
-      ["December 14", "December 15", 0],
+      ["December 14", "December 15", "N/A"],
       ["December 15", "December 16", 138]],
       "labels": ["December 13", "December 14", "December 15"],
       "values": [2447, 0, 138]
@@ -211,7 +211,7 @@ test('getAllPeriods - two periods with a gap without ajax - min (far apart)', fu
 
   var expectation = {
       "everything": [["11:58 AM", "11:59 AM", 2447],
-    ["11:59 AM", "12:00 PM", 0],
+    ["11:59 AM", "12:00 PM", "N/A"],
     ["12:00 PM", "12:01 PM", 138]],
       "labels": ["11:58 AM", "11:59 AM", "12:00 PM"],
       "values": [2447, 0, 138]
@@ -231,7 +231,7 @@ test('getAllPeriods - two periods with a gap without ajax - min (close together)
 
   var expectation = {
       "everything": [["11:58 AM", "11:59 AM", 2447],
-    ["11:59 AM", "12:00 PM", 0],
+    ["11:59 AM", "12:00 PM", "N/A"],
     ["12:00 PM", "12:01 PM", 138]],
       "labels": ["11:58 AM", "11:59 AM", "12:00 PM"],
       "values": [2447, 0, 138]
@@ -251,7 +251,7 @@ test('getAllPeriods - two periods with a gap without ajax - hour (far apart)', f
 
   var expectation = {
       "everything": [["11:00 AM", "12:00 PM", 2447],
-    ["12:00 PM", "1:00 PM", 0],
+    ["12:00 PM", "1:00 PM", "N/A"],
     ["1:00 PM", "2:00 PM", 138]],
       "labels": ["11:00 AM", "12:00 PM", "1:00 PM"],
       "values": [2447, 0, 138]
@@ -271,7 +271,7 @@ test('getAllPeriods - two periods with a gap without ajax - hour (close together
 
   var expectation = {
       "everything": [["11:00 AM", "12:00 PM", 2447],
-    ["12:00 PM", "1:00 PM", 0],
+    ["12:00 PM", "1:00 PM", "N/A"],
     ["1:00 PM", "2:00 PM", 138]],
       "labels": ["11:00 AM", "12:00 PM", "1:00 PM"],
       "values": [2447, 0, 138]
@@ -291,7 +291,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (far apart)', 
     var periods = NT.getAllPeriods(numbers);
     var expectation = {
       "everything": [["October", "November", 2447],
-      ["November", "December", 0],
+      ["November", "December", "N/A"],
       ["December", "January", 138]],
       "labels": ["October", "November", "December"],
       "values": [2447, 0, 138]
@@ -310,7 +310,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (far apart) in
     var periods = NT.getAllPeriods(numbers);
     var expectation = {
       "everything": [["November", "December", 2447],
-      ["December", "January", 0],
+      ["December", "January", "N/A"],
       ["January", "February", 138]],
       "labels": ["November", "December", "January"],
       "values": [2447, 0, 138]
@@ -329,7 +329,7 @@ test('getAllPeriods - two periods with a gap without ajax - month (close togethe
     var periods = NT.getAllPeriods(numbers);
     var expectation = {
       "everything": [["November", "December", 2447],
-      ["December", "January", 0],
+      ["December", "January", "N/A"],
       ["January", "February", 138]],
       "labels": ["November", "December", "January"],
       "values": [2447, 0, 138]
@@ -349,7 +349,7 @@ test('getAllPeriods - two periods with a gap without ajax - year (close together
     var periods = NT.getAllPeriods(numbers);
     var expectation = {
       "everything": [[2013, 2014, 2447],
-      [2014, 2015, 0],
+      [2014, 2015, "N/A"],
       [2015, 2016, 138]],
       "labels": [2013, 2014, 2015],
       "values": [2447, 0, 138]
@@ -368,7 +368,7 @@ test('getAllPeriods - two periods with a gap without ajax - year (far apart)', f
     var periods = NT.getAllPeriods(numbers);
     var expectation = {
       "everything": [[2013, 2014, 2447],
-      [2014, 2015, 0],
+      [2014, 2015, "N/A"],
       [2015, 2016, 138]],
       "labels": [2013, 2014, 2015],
       "values": [2447, 0, 138]
@@ -389,11 +389,11 @@ test('getAllPeriods - get period when there is no data for the range - year', fu
 
     var periods = NT.getAllPeriods(numbers);
     var expectation = {
-      "everything": [[2013, 2014, 0],
-      [2014, 2015, 0],
-      [2015, 2016, 0],
-      [2016, 2017, 0],
-      [2017, 2018, 0]],
+      "everything": [[2013, 2014, "N/A"],
+      [2014, 2015, "N/A"],
+      [2015, 2016, "N/A"],
+      [2016, 2017, "N/A"],
+      [2017, 2018, "N/A"]],
       "labels": [2013, 2014, 2015, 2016, 2017],
       "values": [0, 0, 0, 0, 0]
 

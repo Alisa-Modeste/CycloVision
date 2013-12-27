@@ -40,3 +40,8 @@
 form span {
 	display: none;
 }
+
+.fake-link {
+	text-decoration: underline;
+	color: blue;
+}

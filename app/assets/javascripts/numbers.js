@@ -300,7 +300,7 @@
 		from = NT.formatPeriodHeading(from);
 		to = NT.formatPeriodHeading(to);
 
-		$("#period-title").html("<h2>" + from + " to " + to + "</h2>")
+		$("#period-title").html(from + " to " + to)
 
 		$("#previous").html("View previous " + NT.interval + "s");
 		$("#next").html("View later " + NT.interval + "s");

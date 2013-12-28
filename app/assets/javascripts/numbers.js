@@ -348,13 +348,13 @@
 				NT.changeDates("next", date);
 			}
 			else {
-				$("form span").addClass("show-message").removeClass("hide-message");
+				$("form span").addClass("show-message");
 			}
 		});
 
 
 		$("form input").focus(function(){
-			$("form span").addClass("hide-message").removeClass("show-message");
+			$("form span").removeClass("show-message");
 			$(this).val("");
 		});
 

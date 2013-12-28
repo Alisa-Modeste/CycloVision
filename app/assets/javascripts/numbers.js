@@ -1,12 +1,8 @@
-//on submit send ajax for day, year, min, hour, month
-
-//$("#body-cells").html()
-
 (function (root){
 	var NT = root.NT = (root.NT || {} );
 
 	NT.interval = "day";
-	NT.nextSet = "same"; //or "next" or "previous"
+	NT.nextSet = "same";
 	NT.useAjax = false;
 	var periods, labels, values;
 
@@ -145,7 +141,7 @@
 		
 	};
 
-	//dries up the pushing into periods, labels, and values from getAllPeriods
+	//pushes into periods, labels, and values reset in getAllPeriods from numbers object
 	NT.storePeriod = function(time, numbers){
 		var period = NT.getPeriodStartEnd( time );
 
@@ -216,9 +212,9 @@
 			periodGoal = NT.ending;
 			nextPeriod = moment(keys[ keys.length-1 ] *1000).add(NT.interval, 1)._d.getTime() /1000;
 		
-			var j=0;
-			while (i == keys.length-1 && periodComparison < periodGoal || i == keys.length-1 && j==0 && nextPeriod < periodGoal){
-				j++
+			var firstTime = true;
+			while (i == keys.length-1 && periodComparison < periodGoal || i == keys.length-1 && firstTime && nextPeriod < periodGoal){
+				firstTime = false;
 				
 				NT.storePeriod(nextPeriod, numbers);
 				nextPeriod = moment(nextPeriod *1000).add(NT.interval, 1)._d.getTime() /1000;
@@ -264,7 +260,6 @@
 				console.log("There was an error")
 			},
 			success: function(data){
-				console.log("Success",data)
 				callback(data)
 			}
 		});
@@ -353,14 +348,13 @@
 				NT.changeDates("next", date);
 			}
 			else {
-				console.log("Invalid number")
-				$("form span").css( "display", "inline" ).fadeIn( 1000 )
+				$("form span").addClass("show-message").removeClass("hide-message");
 			}
 		});
 
 
 		$("form input").focus(function(){
-			$("form span").css( "display", "none" ).fadeOut( 1000 )
+			$("form span").addClass("hide-message").removeClass("show-message");
 			$(this).val("");
 		});
 

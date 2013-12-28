@@ -44,6 +44,14 @@ form span {
 	display: none;
 }
 
+.hide-message {
+	display: none;
+}
+
+.show-message {
+	display: inline;
+}
+
 .fake-link {
 	text-decoration: underline;
 	color: blue;
